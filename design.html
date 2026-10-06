@@ -7,72 +7,126 @@
 <style>
   :root{
     --navy:#1b2a4a; --ink:#2a3350; --muted:#6b7390;
-    --paper:#faf7f1; --card:#ffffff; --line:#e7e1d4;
-    --blue:#0055a4; --red:#ef4135; --gold:#e8a100; --gold-soft:#fdf3d7;
+    --paper:#fdf6ea; --card:#ffffff; --line:#e7e1d4;
+    --blue:#0055a4; --cobalt:#1f5fe0; --sky:#2fa8de; --teal:#0e9a8b;
+    --violet:#7b3fd4; --lav:#efe4fb;
+    --red:#ef4135; --rose:#e8366b; --orange:#ef7d1a; --terra:#fff3e4;
+    --gold:#e8a100; --gold-soft:#fdf3d7; --coin:#ffd83d;
     --green:#2e7d4f; --green-soft:#e3f2e7;
     --radius:14px;
   }
   *{box-sizing:border-box}
   body{margin:0;font-family:"Segoe UI",system-ui,-apple-system,Roboto,"Helvetica Neue",Arial,sans-serif;
-    background:var(--paper);color:var(--ink);line-height:1.5}
-  .tricolor{height:6px;background:linear-gradient(to right,var(--blue) 0 33%,#fff 33% 66%,var(--red) 66% 100%)}
-  header.top{background:var(--navy);color:#fff;padding:14px 22px;display:flex;gap:16px;align-items:center;flex-wrap:wrap}
-  .logo{font-size:1.35rem;font-weight:800;letter-spacing:.2px}
-  .logo small{display:block;font-size:.72rem;font-weight:400;color:#c6cde3}
-  nav.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-left:8px}
-  nav.tabs a{color:#dbe1f2;text-decoration:none;padding:8px 14px;border-radius:999px;font-size:.92rem;border:1px solid transparent}
-  nav.tabs a.active{background:#fff;color:var(--navy);font-weight:700}
-  nav.tabs a:hover{border-color:#8fa0c9}
-  .cta{margin-left:auto;background:var(--red);color:#fff;border:none;border-radius:999px;
-    padding:11px 22px;font-size:1rem;font-weight:700;cursor:pointer}
+    background:var(--paper);
+    background-image:radial-gradient(circle at 8% 12%,#ffe9c9 0 90px,transparent 91px),
+      radial-gradient(circle at 92% 8%,#ffd9de 0 110px,transparent 111px),
+      radial-gradient(circle at 85% 90%,#d8ecff 0 120px,transparent 121px),
+      radial-gradient(circle at 10% 88%,#e7ddff 0 100px,transparent 101px);
+    color:var(--ink);line-height:1.5}
+  .tricolor{height:10px;background:linear-gradient(to right,var(--blue) 0 30%,#fff 30% 35%,var(--red) 35% 65%,#fff 65% 70%,var(--blue) 70% 100%)}
+  /* HUD */
+  header.hud{background:linear-gradient(100deg,#123a8f 0%,var(--violet) 55%,var(--rose) 100%);
+    color:#fff;padding:10px 22px;display:flex;gap:14px;align-items:center;flex-wrap:wrap;position:sticky;top:0;z-index:5}
+  .logo{font-size:1.3rem;font-weight:800}
+  .logo small{display:block;font-size:.7rem;font-weight:400;color:#ffe9a8}
+  .hud-stats{display:flex;gap:10px;flex-wrap:wrap;margin-left:6px}
+  .stat{background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.35);border-radius:999px;
+    padding:5px 13px;font-weight:800;font-size:.9rem;white-space:nowrap}
+  .cta{margin-left:auto;background:linear-gradient(100deg,var(--red),var(--orange));color:#fff;border:none;border-radius:999px;
+    padding:11px 22px;font-size:1rem;font-weight:800;cursor:pointer;box-shadow:0 3px 0 #b53a12}
   .cta:hover{filter:brightness(1.08)}
+  .cta:active{transform:translateY(2px);box-shadow:none}
   .wrap{max-width:1180px;margin:0 auto;padding:22px}
   .demo-note{background:#eef3ff;border:1px dashed var(--blue);color:var(--navy);border-radius:10px;
     padding:10px 14px;font-size:.88rem;margin-bottom:18px}
-  /* CEFR + stages */
-  .strip{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:18px}
-  @media(max-width:860px){.strip{grid-template-columns:1fr}}
   .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:18px}
   .card h2{margin:0 0 4px;font-size:1.02rem;color:var(--navy)}
   .card p.sub{margin:0 0 12px;color:var(--muted);font-size:.88rem}
-  .cef{display:flex;gap:6px;flex-wrap:wrap}
-  .cef span{padding:7px 12px;border-radius:999px;border:1px solid var(--line);font-weight:700;font-size:.85rem;color:var(--muted);background:#f4f1e8}
-  .cef span.on{background:var(--navy);color:#fff;border-color:var(--navy)}
-  .cef span.next{border-color:var(--blue);color:var(--blue)}
-  .stages{display:flex;gap:6px;flex-wrap:wrap;align-items:center;font-size:.85rem}
-  .stages b{background:var(--green-soft);color:var(--green);border-radius:8px;padding:6px 10px}
-  .stages b.now{background:var(--green);color:#fff}
-  .stages i{color:var(--muted);font-style:normal}
-  /* main grid */
-  .grid{display:grid;grid-template-columns:1.35fr 1fr;gap:16px}
-  @media(max-width:960px){.grid{grid-template-columns:1fr}}
-  .scene{background:#f2ecff;border:1px solid #d9cdf3;border-radius:10px;padding:12px 14px;margin-bottom:12px;font-size:.95rem}
-  .scene .who{font-weight:700;color:#5b3fa8}
+  .card.blue-top{border-top:6px solid var(--cobalt)}
+  .card.violet-top{border-top:6px solid var(--violet)}
+  .card.red-top{border-top:6px solid var(--red)}
+  .card.orange-top{border-top:6px solid var(--orange)}
+  .card.teal-top{border-top:6px solid var(--teal)}
+  .kicker{font-size:.75rem;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--muted)}
   .gloss{color:var(--muted);font-size:.83rem}
+  /* quest banner */
+  .quest{background:linear-gradient(120deg,#123a8f,#7b3fd4 60%,#e8366b);color:#fff;border-radius:var(--radius);
+    padding:18px;display:flex;gap:16px;align-items:center;margin-bottom:18px;box-shadow:0 6px 18px rgba(27,42,74,.25)}
+  .leo{font-size:2.6rem;animation:float 3s ease-in-out infinite}
+  @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+  .bubble{background:#fff;color:var(--navy);border-radius:14px 14px 14px 2px;padding:12px 16px;font-size:.95rem;position:relative}
+  .bubble b{color:var(--rose)}
+  /* journey map */
+  .journey{display:flex;align-items:center;gap:0;margin:14px 0 4px;overflow-x:auto;padding:6px 2px}
+  .node{flex:0 0 auto;width:64px;text-align:center;font-size:.72rem;color:var(--muted)}
+  .node .dot{width:46px;height:46px;margin:0 auto 4px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+    font-size:1.3rem;background:#fff;border:3px solid var(--line)}
+  .node.done .dot{border-color:var(--gold);background:var(--gold-soft)}
+  .node.now .dot{border-color:var(--rose);background:#ffe9ef;animation:pulse 1.6s infinite}
+  @keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(232,54,107,.45)}50%{box-shadow:0 0 0 10px rgba(232,54,107,0)}}
+  .link{flex:1 0 22px;height:4px;border-radius:2px;background:var(--line);min-width:18px}
+  .link.done{background:var(--gold)}
+  .cef{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px}
+  .cef span{padding:7px 12px;border-radius:999px;border:2px solid;font-weight:800;font-size:.85rem;background:#fff}
+  .cef span:nth-child(1){border-color:var(--red);color:#fff;background:var(--red)}
+  .cef span:nth-child(2){border-color:var(--orange);color:#c05f0a}
+  .cef span:nth-child(3){border-color:var(--gold);color:#8a5f00}
+  .cef span:nth-child(4){border-color:var(--green);color:var(--green)}
+  .cef span:nth-child(5){border-color:var(--cobalt);color:var(--cobalt)}
+  .cef span:nth-child(6){border-color:var(--violet);color:var(--violet)}
+  .stages{display:flex;gap:6px;flex-wrap:wrap;align-items:center;font-size:.85rem}
+  .stages b{border-radius:8px;padding:6px 10px;color:#fff}
+  .stages b:nth-of-type(1){background:var(--cobalt)}
+  .stages b:nth-of-type(2){background:var(--teal)}
+  .stages b:nth-of-type(3){background:var(--orange)}
+  .stages b:nth-of-type(4){background:var(--violet)}
+  .stages b:nth-of-type(5){background:var(--rose)}
+  .stages b.now{outline:3px solid var(--navy);outline-offset:1px}
+  .stages i{color:var(--muted);font-style:normal}
+  /* arena */
+  .grid{display:grid;grid-template-columns:1.35fr 1fr;gap:16px;margin-top:16px}
+  @media(max-width:960px){.grid{grid-template-columns:1fr}}
+  .arena-head{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+  .badge{background:var(--rose);color:#fff;font-weight:800;font-size:.78rem;border-radius:8px;padding:4px 12px;letter-spacing:1px}
+  .timer{flex:1;height:10px;background:#f3e3e3;border-radius:999px;overflow:hidden;min-width:120px}
+  .timer i{display:block;height:100%;width:100%;background:linear-gradient(to right,var(--orange),var(--red));border-radius:999px;
+    animation:tick 30s linear infinite}
+  @keyframes tick{from{width:100%}to{width:0%}}
+  .scene{background:var(--lav);border:1px solid #d9cdf3;border-radius:10px;padding:12px 14px;margin:12px 0;font-size:.95rem}
+  .scene .who{font-weight:700;color:#5b3fa8}
   .prompt{font-size:1.15rem;margin:10px 0;color:var(--navy)}
-  .build{background:var(--navy);color:#fff;border-radius:12px;padding:16px;text-align:center;
+  .build{background:linear-gradient(120deg,var(--navy),var(--violet));color:#fff;border-radius:12px;padding:16px;text-align:center;
     font-size:1.6rem;letter-spacing:.5px;margin:12px 0;min-height:64px}
-  .build .slot{border-bottom:3px dashed var(--gold);padding:0 10px;min-width:90px;display:inline-block}
+  .build .slot{border-bottom:3px dashed var(--coin);padding:0 10px;min-width:90px;display:inline-block}
   .chips{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0}
   .chips button{border:2px solid var(--line);background:#fff;border-radius:999px;padding:8px 15px;
     font-size:.95rem;cursor:pointer;color:var(--ink)}
-  .chips button:hover{border-color:var(--blue)}
-  .chips button.sel{background:var(--blue);border-color:var(--blue);color:#fff;font-weight:700}
-  .chips button:focus-visible,.cta:focus-visible,input:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+  .chips button:nth-child(3n+1):hover{border-color:var(--red)}
+  .chips button:nth-child(3n+2):hover{border-color:var(--cobalt)}
+  .chips button:nth-child(3n):hover{border-color:var(--teal)}
+  .chips button.sel{background:var(--red);border-color:var(--red);color:#fff;font-weight:700}
+  .chips button:focus-visible,.cta:focus-visible,.check:focus-visible,input:focus-visible{outline:3px solid var(--coin);outline-offset:2px}
   label.lbl{display:block;font-size:.85rem;color:var(--muted);margin:12px 0 4px}
   .typerow{display:flex;gap:8px}
   input[type=text]{flex:1;border:2px solid var(--line);border-radius:10px;padding:11px 12px;font-size:1.05rem}
-  .check{background:var(--green);color:#fff;border:none;border-radius:10px;padding:11px 20px;
-    font-size:1rem;font-weight:700;cursor:pointer}
+  .check{background:linear-gradient(100deg,var(--green),var(--teal));color:#fff;border:none;border-radius:10px;padding:11px 20px;
+    font-size:1rem;font-weight:800;cursor:pointer;box-shadow:0 3px 0 #1c5a3c}
+  .check:active{transform:translateY(2px);box-shadow:none}
   .feedback{border-radius:10px;padding:12px 14px;margin-top:12px;font-size:.93rem;display:none}
   .feedback.ok{display:block;background:var(--green-soft);border:1px solid var(--green);color:#17452b}
-  .feedback.ko{display:block;background:#fdeceb;border:1px solid var(--red);color:#7c1d16}
+  .feedback.ko{display:block;background:#fdeceb;border:1px solid var(--red);color:#7c1d16;animation:shake .4s}
+  @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
   .tag{display:inline-block;font-size:.75rem;font-weight:700;border-radius:6px;padding:2px 8px;margin-top:6px}
   .tag.grammar{background:#fff;border:1px solid currentColor}
-  /* side panels */
+  #toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%) translateY(20px);background:var(--navy);color:#fff;
+    font-weight:800;border-radius:999px;padding:12px 24px;opacity:0;transition:all .3s;pointer-events:none;z-index:9}
+  #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+  .confetti{position:fixed;top:-12px;font-size:1.2rem;pointer-events:none;z-index:9;animation:fall 1.4s ease-in forwards}
+  @keyframes fall{to{transform:translateY(105vh) rotate(340deg)}}
+  /* side */
   .side{display:flex;flex-direction:column;gap:16px}
   .legend{background:var(--navy);color:#e6ebf7;border-radius:10px;padding:10px 14px;font-size:.83rem}
-  .legend b.g{color:var(--gold)} .legend b.b{color:#9cc2ee}
+  .legend b.g{color:var(--coin)} .legend b.b{color:#9cc2ee}
   .card.stars-card{border-left:6px solid var(--gold);background:linear-gradient(#fffdf4,#fff)}
   .card.master-card{border-left:6px solid var(--blue)}
   .stars{font-size:1.5rem;letter-spacing:3px;color:var(--gold)}
@@ -85,50 +139,69 @@
   .pill{display:inline-block;font-size:.78rem;font-weight:700;border-radius:999px;padding:3px 10px}
   .pill.gold{background:var(--gold-soft);color:#8a5f00;border:1px solid var(--gold)}
   .pill.blue{background:#e7f0fb;color:var(--blue);border:1px solid var(--blue)}
-  .glitch{border-left:4px solid var(--red);background:#fff8f6;border-radius:0 10px 10px 0;padding:10px 12px;margin:8px 0;font-size:.9rem}
+  .glitch{border-left:5px solid var(--orange);background:var(--terra);border-radius:0 10px 10px 0;padding:10px 12px;margin:8px 0;font-size:.9rem}
   .glitch .fix{color:var(--green);font-weight:700}
-  .sim{border:2px dashed var(--muted);border-radius:var(--radius);padding:16px;background:#f6f4ee}
-  .sim.locked{opacity:.92}
+  .sim{border:2px dashed var(--teal);border-radius:var(--radius);padding:16px;background:#e8faf6}
   .kicker{font-size:.75rem;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--muted)}
   .districts{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px}
-  .districts div{flex:1 1 140px;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px;font-size:.85rem}
-  .districts div.open{border-color:var(--green)}
-  footer{color:var(--muted);font-size:.82rem;text-align:center;padding:20px}
+  .districts div{flex:1 1 140px;border-radius:10px;padding:10px;font-size:.85rem;border:2px solid}
+  .districts div.d1{background:#e4f6ef;border-color:var(--green)}
+  .districts div.d2{background:var(--terra);border-color:var(--orange)}
+  .districts div.d3{background:var(--lav);border-color:var(--violet)}
+  .districts div.d4{background:#e2f4fb;border-color:var(--sky)}
+  nav.foot-tabs{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;padding:14px}
+  nav.foot-tabs a{color:var(--navy);text-decoration:none;font-weight:700;font-size:.9rem;padding:8px 16px;border-radius:999px;background:#fff;border:2px solid var(--line)}
+  nav.foot-tabs a.active{background:var(--navy);color:#fff;border-color:var(--navy)}
+  footer{color:var(--muted);font-size:.82rem;text-align:center;padding:6px 20px 22px}
+  @media(prefers-reduced-motion:reduce){*{animation:none !important;transition:none !important}}
 </style>
 </head>
 <body>
 <div class="tricolor"></div>
-<header class="top">
-  <div class="logo">Oneal Conjugue! <small>Apprenti Conjugueur · Chapitre A1 « L'Arrivée »</small></div>
-  <nav class="tabs" id="mainnav">
-    <a href="#atelier" class="active">Atelier</a>
-    <a href="#cas">Cas</a>
-    <a href="#simulations">Simulations</a>
-    <a href="#progres">Progrès</a>
-  </nav>
-  <button class="cta" onclick="document.getElementById('atelier').scrollIntoView({behavior:'smooth'})">Continuer le cas 3 →</button>
+<header class="hud">
+  <div class="logo">Oneal Conjugue! <small>Niveau 3 · Apprenti Conjugueur</small></div>
+  <div class="hud-stats">
+    <span class="stat" id="hearts">❤❤❤</span>
+    <span class="stat" id="streak">🔥 Série x4</span>
+    <span class="stat" id="gems">💎 120</span>
+    <span class="stat">⚡ +<span id="xp">350</span> XP</span>
+  </div>
+  <button class="cta" onclick="document.getElementById('arena').scrollIntoView({behavior:'smooth'})">Jouer le défi →</button>
 </header>
 
 <div class="wrap">
-  <div class="demo-note"><b>Aperçu visuel</b> — maquette statique de démonstration (personnages et phrases fictifs). Aucune progression réelle n'est enregistrée. <span class="gloss">Visual design preview — demo only, no real progress is saved.</span></div>
+  <div class="demo-note"><b>Aperçu visuel</b> — maquette de démonstration (personnages et phrases fictifs). Aucune progression réelle n'est enregistrée. <span class="gloss">Visual design preview — demo only, no real progress is saved.</span></div>
 
-  <div class="strip">
-    <div class="card">
-      <h2>Progression CECR · CEFR</h2>
-      <p class="sub">Un mystère en six chapitres — <i>one story, six chapters</i></p>
-      <div class="cef"><span class="on">A1 · L'Arrivée</span><span class="next">A2 · Les Archives</span><span>B1</span><span>B2</span><span>C1</span><span>C2</span></div>
+  <div class="quest">
+    <div class="leo">🦁</div>
+    <div class="bubble"><b>QUÊTE 3 — La Place du présent :</b> le temps est bloqué sur la place du marché ! Le marchand a besoin de toi — <b>conjugue juste pour débloquer le quartier.</b> <span class="gloss">Time is frozen — conjugate right to unblock the district!</span></div>
+  </div>
+
+  <div class="card blue-top">
+    <h2>Carte du chapitre · A1 « L'Arrivée »</h2>
+    <p class="sub">Termine les cas pour avancer — <i>clear cases to move forward</i></p>
+    <div class="journey">
+      <div class="node done"><div class="dot">★</div>Cas 1</div><div class="link done"></div>
+      <div class="node done"><div class="dot">★</div>Cas 2</div><div class="link done"></div>
+      <div class="node now"><div class="dot">⚔</div><b>Cas 3</b></div><div class="link"></div>
+      <div class="node"><div class="dot">🔒</div>Cas 4</div><div class="link"></div>
+      <div class="node"><div class="dot">🏆</div>Défi</div>
     </div>
-    <div class="card">
-      <h2>Parcours du cas · Learning loop</h2>
-      <p class="sub">Chaque forme suit le même parcours — <i>every form follows this path</i></p>
-      <div class="stages"><b>Apprendre</b><i>→</i><b class="now">S'exercer</b><i>→</i><b>Défi</b><i>→</i><b>Maîtrise</b><i>→</i><b>Utiliser</b></div>
-    </div>
+    <div class="cef"><span>A1 · L'Arrivée</span><span>A2 · Les Archives</span><span>B1</span><span>B2</span><span>C1</span><span>C2</span></div>
+  </div>
+
+  <div class="card violet-top" style="margin-top:16px">
+    <h2>Parcours du cas · Learning loop</h2>
+    <p class="sub">Chaque forme suit le même parcours — <i>every form follows this path</i></p>
+    <div class="stages"><b>Apprendre ✓</b><i>→</i><b class="now">S'exercer ⚔</b><i>→</i><b>Défi</b><i>→</i><b>Maîtrise</b><i>→</i><b>Utiliser</b></div>
   </div>
 
   <div class="grid">
-    <div class="card" id="atelier">
-      <span class="kicker">Cas 3 — La Place du présent · L'Atelier de conjugaison</span>
-      <h2 style="margin-top:6px">Le marchand vous accueille</h2>
+    <div class="card red-top" id="arena">
+      <div class="arena-head"><span class="badge">⚔ DÉFI · +20 XP</span>
+        <div class="timer" title="compte à rebours décoratif / decorative countdown"><i></i></div>
+      </div>
+      <h2 style="margin-top:10px">Le marchand vous défie</h2>
       <div class="scene"><span class="who">Marchand :</span> Bonjour ! Vous êtes nouveau ici ?
         <div class="gloss">Hello! Are you new here?</div></div>
       <p class="prompt">Complétez : <b>Oui, je <u>___</u> (être) nouveau.</b>
@@ -146,7 +219,7 @@
       <label class="lbl" for="typed">2 · Écris la forme complète (type the full form)</label>
       <div class="typerow">
         <input type="text" id="typed" placeholder="je …" autocomplete="off" lang="fr">
-        <button class="check" id="checkBtn">Vérifier</button>
+        <button class="check" id="checkBtn">Vérifier ⚔</button>
       </div>
       <div class="feedback" id="feedback"></div>
     </div>
@@ -168,32 +241,40 @@
         <div class="dim"><span>Production</span><div class="bar"><i style="width:45%"></i></div><b>À travailler</b></div>
         <div class="dim"><span>Contexte</span><div class="bar"><i style="width:50%"></i></div><b>À travailler</b></div>
       </div>
-      <div class="card" id="cas">
+      <div class="card orange-top" id="cas">
         <h2>Banque de fautes · Time Glitches</h2>
         <p class="sub">Tes erreurs reviennent dans l'histoire — <i>weak areas return as story glitches</i></p>
         <div class="glitch">Hier, je <s>mange</s> au restaurant.<br><span class="fix">→ Hier, j'ai mangé au restaurant.</span><br><span class="tag grammar">Mauvais temps · wrong tense</span></div>
         <div class="glitch">Tu <s>est</s> prêt ?<br><span class="fix">→ Tu es prêt ?</span><br><span class="tag grammar">Mauvais sujet · wrong subject</span></div>
       </div>
-      <div class="sim locked" id="simulations">
-        <span class="kicker">Grande Simulation · verrouillée</span>
+      <div class="sim" id="simulations">
+        <span class="kicker">🎁 Grande Simulation · verrouillée</span>
         <h2 style="margin:6px 0">Une journée à Paris</h2>
         <p class="sub">Se débloque avec : Maîtrise du passé composé + ★★★ — <i>unlocks with Passé composé mastery + 3 stars</i></p>
-        <button class="cta" style="background:var(--muted)" onclick="alert('Démo : simulation verrouillée. / Demo: simulation locked.')">Voir un extrait</button>
+        <button class="cta" style="background:var(--muted);box-shadow:none" onclick="alert('Démo : simulation verrouillée. / Demo: simulation locked.')">Voir un extrait</button>
       </div>
     </div>
   </div>
 
-  <div class="card" style="margin-top:16px">
+  <div class="card teal-top" style="margin-top:16px">
     <h2>Quartiers · Districts</h2>
     <p class="sub">Chaque quartier est une grammaire — <i>every district is a grammar</i></p>
     <div class="districts">
-      <div class="open"><b>Place du présent</b><br>tout se passe maintenant</div>
-      <div><b>Les Archives 🔒</b><br>événements passés (A2)</div>
-      <div><b>Quartier des Brumes 🔒</b><br>souvenirs, imparfait (A2)</div>
-      <div><b>L'Observatoire 🔒</b><br>projets, futur (A2)</div>
+      <div class="d1"><b>🟢 Place du présent</b><br>tout se passe maintenant</div>
+      <div class="d2"><b>Les Archives 🔒</b><br>événements passés (A2)</div>
+      <div class="d3"><b>Quartier des Brumes 🔒</b><br>souvenirs, imparfait (A2)</div>
+      <div class="d4"><b>L'Observatoire 🔒</b><br>projets, futur (A2)</div>
     </div>
   </div>
+
+  <nav class="foot-tabs" id="mainnav">
+    <a href="#arena" class="active">⚔ Atelier</a>
+    <a href="#cas">🃏 Cas</a>
+    <a href="#simulations">🎭 Simulations</a>
+    <a href="#progres">🏆 Progrès</a>
+  </nav>
 </div>
+<div id="toast"></div>
 
 <footer>Oneal Conjugue! — Léo 🇫🇷 t'accompagne · <i>design preview, fictional demo content</i></footer>
 
@@ -204,7 +285,33 @@
   var typed = document.getElementById('typed');
   var fb = document.getElementById('feedback');
   var stars = document.getElementById('stars');
-  var picked = '';
+  var heartsEl = document.getElementById('hearts');
+  var streakEl = document.getElementById('streak');
+  var gemsEl = document.getElementById('gems');
+  var xpEl = document.getElementById('xp');
+  var toast = document.getElementById('toast');
+  var picked = '', hearts = 3, streak = 4, gems = 120, xp = 350, toastT = null;
+  function showToast(msg){
+    toast.textContent = msg;
+    toast.classList.add('show');
+    if(toastT){ clearTimeout(toastT); }
+    toastT = setTimeout(function(){ toast.classList.remove('show'); }, 2200);
+  }
+  function confetti(){
+    var glyphs = ['🎉','⭐','🇫🇷','✨','🔥'];
+    for(var k = 0; k < 26; k++){
+      (function(k){
+        var s = document.createElement('span');
+        s.className = 'confetti';
+        s.textContent = glyphs[k % glyphs.length];
+        s.style.left = (4 + Math.random() * 92) + 'vw';
+        s.style.fontSize = (0.9 + Math.random() * 1.1) + 'rem';
+        s.style.animationDelay = (Math.random() * 0.35) + 's';
+        document.body.appendChild(s);
+        setTimeout(function(){ s.remove(); }, 2200);
+      })(k);
+    }
+  }
   chips.forEach(function(b){
     b.addEventListener('click', function(){
       chips.forEach(function(x){x.classList.remove('sel')});
@@ -220,11 +327,20 @@
     if(!answer){ fb.className='feedback ko'; fb.textContent='Choisis une terminaison ou écris la forme. / Pick an ending or type the form.'; return; }
     if(answer === 'suis'){
       fb.className='feedback ok';
-      fb.innerHTML='<b>Bravo !</b> « Je suis nouveau. » — <i>être</i> au présent, 1<sup>re</sup> personne. Léo est fier de toi !<br><span class="tag grammar">Présent · être · je</span>';
+      fb.innerHTML='<b>Bravo ! +20 XP</b> « Je suis nouveau. » — <i>être</i> au présent, 1<sup>re</sup> personne. Léo est fier de toi !<br><span class="tag grammar">Présent · être · je</span>';
       stars.innerHTML='★★★';
+      streak++; xp += 20; gems += 5;
+      streakEl.textContent = '🔥 Série x' + streak;
+      gemsEl.textContent = '💎 ' + gems;
+      xpEl.textContent = xp;
+      confetti();
+      showToast('+20 XP · Série x' + streak + ' 🔥');
     } else {
+      hearts = Math.max(1, hearts - 1);
+      heartsEl.textContent = '❤'.repeat(hearts) + '🖤'.repeat(3 - hearts);
       fb.className='feedback ko';
-      fb.innerHTML='<b>Pas encore.</b> « je ' + answer + ' » ne convient pas ici : le sujet <b>je</b> avec <b>être</b> au présent donne <b>suis</b>. Essaie encore !<br><span class="tag grammar">Mauvais sujet/terminaison · review: je suis, tu es, il est</span>';
+      fb.innerHTML='<b>Raté ! −1 ❤.</b> « je ' + answer + ' » ne convient pas : le sujet <b>je</b> avec <b>être</b> au présent donne <b>suis</b>. Essaie encore !<br><span class="tag grammar">Mauvais sujet/terminaison · review: je suis, tu es, il est</span>';
+      showToast('Raté ! Il te reste ' + hearts + ' ❤');
     }
   });
   var links = document.querySelectorAll('#mainnav a');
