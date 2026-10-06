@@ -1,91 +1,103 @@
 # Oneal Conjugue!
 
-Progressive French conjugation mastery game, from A1 to C2.
+3D story-driven French conjugation mastery game, from A1 to C2.
 
 > Learn a form. Practise it. Challenge it. Master it. Use it in context.
 
 **Working product name:** Oneal Conjugue!
 **Product type:** Language-learning game (French conjugation)
 **Learning range:** CEFR A1 → C2
-**Spec source:** `PRD_Oneal_Conjugue.md` (in this folder, v2.0, September 2026)
+**Spec source:** `PRD_Oneal_Conjugue_v3.md` in this folder (v3.0, October 2026)
+**Status:** PRD / pre-production — no playable implementation yet (see Current Development Status)
+
+v3.0 supersedes `PRD_Oneal_Conjugue.md` (v2.0, September 2026), which is kept in this repo for history. This README describes v3.0.
 
 ---
 
 ## Product Overview
 
-Oneal Conjugue! is a French conjugation learning game designed to take a learner from **A1 to C2**, progressively developing the ability to recognise, understand, conjugate, and use French verbs across tenses, moods, and conjugation forms.
+Oneal Conjugue! is an original 3D story-driven game that takes a learner from **A1 to C2**, developing the ability to recognise, understand, conjugate, choose, and use French verbs across relevant **tenses, moods, and conjugation forms**.
 
-It is not intended to be a collection of conjugation quizzes. The central goal from the PRD is:
+Non-negotiable principle from the PRD (v3 §5.1):
 
-> Teach the player how French verbs work, train them to produce the correct forms, and ultimately make them use those forms naturally in context.
+> Conjugation is the most important part of the game. The world, story and characters exist to make conjugation easier to learn, never to replace it.
 
-The specified learning journey is:
+What changed from v2.0 to v3.0:
 
-**Learn → Practise → Challenge → Master → Use (Simulation)**
+* v2.0 was an exercise-based game with a roleplay simulation as a late reward.
+* v3.0 is a **3D world where the world is the game from minute one**. Story cases already require choosing and using forms in context from A1. Larger Grand Simulations remain as mastery rewards.
+* Core interaction is **The Conjugation Workshop**: conjugation as a physical, visual build (subject + stem + ending + auxiliary/participle/agreement).
+* Tense meaning is **shown through consequences in the world** (replays, timelines, branches, weather), not only explained in lessons.
+* Mistakes return as **Time Glitches** in the story.
+* The curriculum is defined as a **level map data file**, adjustable without rebuilding the game.
+* Scope is staged: **vertical slice first (A1 Chapter 1)**, then full A1–C2.
+
+The learning journey is:
+
+**Learn → Practise → Challenge → Master → Use**
 
 Or in skill terms:
 
 **Recognise → Understand → Conjugate → Recall → Choose → Produce → Use**
 
-The final stage is the differentiator: the player must not only know that *j'ai mangé* is the passé composé of *manger*, but recognise when passé composé is appropriate and use it naturally in a conversation/roleplay.
-
-The complete product is described in the PRD as five connected layers:
-
-1. **Learn** — understand the tense/mood/form
-2. **Practise** — build recognition and recall
-3. **Master** — demonstrate independent knowledge and fix recurring mistakes
-4. **Progress** — earn stars, unlock content, advance A1–C2
-5. **Use** — apply language in roleplay simulations
+In v3 these stages happen **inside the world** as part of play.
 
 ---
 
 ## The Problem It Solves
 
-French conjugation requires learners to handle at the same time:
+French conjugation requires handling at once: verb endings, irregular patterns, tense formation, auxiliary selection, agreement, spelling changes, accents, subject-verb relationships, tense/mood selection, contextual meaning, formal vs informal usage, and common vs literary forms.
 
-verb endings, irregular patterns, tense formation, auxiliary selection, agreement, spelling changes, accents, subject/verb relationships, tense/mood selection, contextual meaning, formal vs informal usage, and common vs literary forms.
-
-Traditional exercises focus heavily on memorisation. A learner may complete:
+Traditional exercises focus on memorisation. A learner may complete:
 
 > Je ___ (être) → suis
 
-without being able to decide what form is appropriate in a real sentence.
+without being able to decide what form a real situation needs.
 
-Oneal Conjugue! is specified to address this by moving the player progressively from **recognition to independent production and contextual use**, with cumulative revision, mistake-driven review, and contextual roleplay.
+Learners also abandon conjugation practice because it feels like repetitive drills with no connection to meaning.
+
+Oneal Conjugue! (v3) is specified to address this by:
+
+* Making conjugation **the way the player acts in the world** (Workshop builds).
+* Showing meaning through **visible consequences** — e.g. passé composé vs imparfait produces a different replay, plus-que-parfait shows a timeline, conditionnel previews a branch, subjonctif changes a character/weather reaction.
+* Moving progressively from recognition to **independent production and contextual choice** (mixed-tense cases where the target tense is not announced).
+* Keeping old verbs/forms active through cumulative revision and mistake-driven Glitch cases.
+* Distinguishing everyday production forms from recognition-only literary forms.
 
 ---
 
 ## Target Users
 
-**Primary: French learners progressing from beginner to advanced (A1–C2)**
+**Primary:** French learners progressing from beginner to advanced (A1–C2).
 
-**Secondary:**
+**Secondary (from PRD v3 §4):**
 
-* Students preparing for French examinations
-* Learners preparing for TCF or similar proficiency examinations
-* Self-directed French learners
-* Learners who want additional conjugation practice
-* Users who enjoy language-learning games
+* Students preparing for DELF/DALF or TCF
+* Self-directed learners wanting extra conjugation practice
+* Learners who enjoy games and story-driven experiences
 
-The game should accommodate both beginners and advanced learners who need difficult conjugation and contextual practice.
+**Context note (PRD v3 §4):** many learners will use mid-range Android phones with limited data, so performance, download size, and offline play are product requirements.
 
 ---
 
-## Core Functionality (as specified in PRD)
+## Core Functionality (as specified in PRD v3 — not implemented)
 
-The PRD defines the following systems. None are implemented yet — this describes the specified product:
+None of the below is implemented yet. This is the specified product:
 
-* **CEFR + mastery-based progression:** A1 → A2 → B1 → B2 → C1 → C2. Within each level, topics unlock via Learn → Practise → Challenge → Mastery milestone → Stars → New content / Simulation. Previously learned verbs/forms remain active and recur.
-* **Conjugation curriculum:** Indicatif (présent, passé composé, imparfait, plus-que-parfait, futur simple/antérieur, passé simple, and others), futur proche, conditionnel présent/passé, subjonctif présent/passé (+ advanced/literary forms where appropriate), impératif, infinitif, participe présent/passé, gérondif, passive and compound constructions. Placement by frequency, difficulty, and level relevance.
-* **Verb progression:** frequent verbs first (être, avoir, aller, faire, pouvoir, vouloir, devoir, savoir, venir, prendre), verb families (prendre/apprendre/comprendre, venir/revenir/devenir, mettre/permettre/promettre), regular before irregular except where irregulars are essential early.
-* **Practice modes:** multiple choice, fill in the blank, conjugation table completion, sentence transformation, context selection (which tense/mood?), error detection, correction, mixed-tense challenge, production challenge. Introduced progressively.
-* **Challenge with deliberate traps:** realistic learner mistakes as distractors — wrong accent/spelling/ending/auxiliary/subject, similar-looking forms, correct form in wrong context, indicative/subjunctive and future/conditional confusion.
-* **Mistake system:** explain why the answer is wrong → corrective practice → track the weak area → return it in later practice. Categories include wrong tense/mood, subject conjugation, ending, auxiliary, agreement, spelling, accent, irregular, similar-form confusion, contextual misuse.
-* **Stars vs Mastery (separate):** Stars (1–3) = performance/achievement on an activity. Mastery = separate competence across recognition, conjugation, context, production, regular/irregular, subjects, structures, mistake frequency, retention. Example from PRD: Passé composé ⭐⭐⭐ but Mastery 78%.
-* **Mixed-tense challenges:** once several forms are learned, questions do not announce the target tense. Player must determine e.g. imparfait vs passé composé from context.
-* **Roleplay simulations (unlockable reward):** realistic scenarios (restaurant, airport, hotel, workplace, job interview, university, doctor, travel, debate, etc.) with characters, visual context, dialogue, and consequences. Early levels make the required form obvious; intermediate mixes learned tenses; advanced/C1–C2 requires nuanced tense/mood choice, formal/literary language, doubt/necessity/emotion/argumentation/reported speech. Example in PRD: job interview testing présent + passé composé + imparfait + futur + conditionnel together.
-* **Supporting systems:** mascot Léo for feedback, progress dashboard (CEFR, tenses, stars, mastery, weak areas, simulations, streak, history), audio/pronunciation as complement, English translations strong at A1 fading to primarily French at C1–C2, replayability via new questions/verbs, timed challenges, mistake review, cumulative revision.
-* **Explanations:** answer why an answer is correct and why a wrong choice is wrong, with rule/table/comparison/example where useful, retained until acknowledged.
+* **Conjugation Workshop (§7):** assemble Subject + Stem + Ending (+ Auxiliary / Participle / Agreement). Wrong endings visibly do not fit. Subject changes reshape the machine. Auxiliary choice is a doorway (avoir gate vs Maison d'Être). Verb families share workbenches. Spelling-change verbs have visible adjustment pieces. Assistance fades: Assembly → Table → Typing (+ accent bar) → Voice (future) → Unprompted.
+* **World and story (§8–§9):** working concept — time has broken in a 3D city, player is apprentice Conjugueur. Districts express grammar (Present square, Passé composé Archives, Imparfait Mist Quarter, Futur Observatory, Conditionnel Garden of Mirrors, Subjonctif Storm District, Courthouse, Infinite Library). One mystery over six CEFR chapters. Verbs as collectible characters (Carnet de verbes). Léo 🇫🇷 as companion/guide.
+* **Cases (§10):** 3–7 min missions — Teaching, Practice, Challenge, Mixed (tense not announced), Glitch (weak-area review), Grand Simulation, Daily case. Flow: scene → dialogue decision → Workshop response → world reaction → explanation/re-practice → stars/mastery update.
+* **Consequences (§11):** world reacts to tense/mood choice; wrong forms cause harmless, humorous misunderstandings to correct.
+* **Curriculum level map (§14):** indicatif, futur constructions, conditionnel, subjonctif, impératif, non-finite/passive/pronominal/reported-speech forms. Each form has `form_id, introduced_level, production_level, consolidation_level, mode (production/recognition_only), frequency_tier, prerequisites, verb_groups, teacher_reviewed`. Must be reviewed by a qualified French teacher before launch. A1 is mostly présent (+ basic impératif, futur proche, limited passé composé preview not required for mastery).
+* **Verb progression (§15):** frequent verbs first (être, avoir, aller, faire, pouvoir, vouloir, devoir, savoir, venir, prendre, dire, voir, mettre, partir), verb families together, regulars before irregulars except essential early irregulars, spelling-change verbs progressively.
+* **Practice modes (§16):** assembly, multiple choice, fill-in-blank, table, transformation, context selection, error detection, correction, mixed-tense, production, voice (future). Introduced progressively.
+* **Mistake / Time Glitch system (§17):** explain why wrong → corrective practice → track category → return as story Glitch. Categories: wrong tense/mood, subject, ending, auxiliary, agreement, spelling, accent, irregular, similar-form confusion, contextual misuse. Explanations stay until acknowledged.
+* **Deliberate traps (§18):** distractors mirror real learner errors, never unfair tricks.
+* **Stars vs Mastery, separate (§19–§20):** Stars (1–3) = performance per case. Mastery = competence (proposed: Recognition 15%, Conjugation 25%, Production 25%, Context 20%, Retention 15%; Mastered ≥85%; retention checks ~3 and 14 days). Player view: stars per case + one fluency meter per tense.
+* **Unlocking (§21):** soft gating — free roam, cases scale to mastery, main story advances on chapter milestones, Grand Simulations unlock via mastery/stars.
+* **Supporting systems:** difficulty progression (§22), mobile-first low-poly 3D + offline-first + on-demand chapters (§23), spoken dialogue + fading English support A1→C2 (§24–§25), progress dashboard (§26), replayability/daily case (§27), accessibility / never punish extra practice (§29).
+
+Content pipeline (specified): conjugation rules engine generates correct forms + traps; hand-written dialogue/explanations; teacher review of curriculum and samples.
 
 ---
 
@@ -95,45 +107,42 @@ The PRD defines the following systems. None are implemented yet — this describ
 
 What exists in this repo today:
 
-* `PRD_Oneal_Conjugue.md` — full product requirements (45 sections, v2.0)
+* `PRD_Oneal_Conjugue_v3.md` — current product requirements (v3.0, October 2026, 37 sections + appendices)
+* `PRD_Oneal_Conjugue.md` — superseded requirements (v2.0, September 2026, kept for history)
 * `README.md` — this file
 
 What does **not** exist yet:
 
-* No application code (frontend / backend / game engine)
-* No lessons, question bank, verb database, or simulations
-* No mastery/stars/progress persistence, auth, or hosting setup
+* No application code (no frontend / backend / game engine)
+* No curriculum data file, verb database, question bank, or case/dialogue content
+* No Workshop implementation, no 3D world/scenes
+* No stars/mastery/progress persistence, auth, or hosting
 * No audio, graphics/animations, or tests
 * No build scripts or deployment config
 * No runnable app
+* No license file, no .gitignore
 
-This README therefore describes the **specified** product, not an implemented one.
+This README describes the **specified** product, not an implemented one. Planned features below are not built.
 
 ---
 
 ## Planned / Future Features
 
-From the PRD, to be built after the PRD stage:
+From PRD v3 roadmap (§33), in order:
 
-1. Learning Mode (concise lessons with formation, usage, patterns, irregulars, tables)
-2. Practice Mode (guided recognition → controlled production)
-3. Mastery Challenge (multi-dimensional mastery gate)
-4. Mixed Challenge (unannounced tense/mood selection)
-5. Mistake Review (targeted weak-area practice)
-6. Timed Challenge
-7. Simulation (contextual roleplay)
-8. Master Challenge (large cumulative revision)
-9. Progress dashboard, stars, streaks, badges, unlocks
-10. Audio support and reduced English dependency by level
-11. C1–C2 advanced content, formal/literary forms
+1. **Phase 0 — Prototype:** minimal test (possibly web Three.js/Babylon.js) to validate Workshop + consequence replay is fun.
+2. **Phase 1 — Vertical slice (A1 Chapter 1 *L'Arrivée*):** one district, présent only (+ late preview of passé composé with avoir + regular participles), ~20 verbs, 8–10 cases, Workshop (assembly/table/typing), explanations + mistake loop, stars + fluency meter, first teacher review.
+3. **Phase 2 — A1 complete + A2 (*Les Archives*):** passé composé + imparfait, mixed-tense challenges, first Glitch review, first Grand Simulation.
+4. **Phase 3 — B1–B2:** subjonctif, conditionnel, plus-que-parfait, compound forms, dashboard + retention checks, audio expansion.
+5. **Phase 4 — C1–C2:** formal/advanced/literary content, advanced simulations, voice input and TCF exam modes if validated.
 
-### Explicitly out of scope for the initial product concept (from PRD §42)
+Game modes when built (§28): Story, Workshop practice, Mastery challenge, Mixed challenge, Glitch review, Timed challenge, Grand Simulation, Master challenge.
 
-General French grammar unrelated to conjugation, full vocabulary system, standalone pronunciation course, general-purpose dictionary, social networking as primary experience, paid subscriptions as central concept, non-French languages.
+Explicitly out of scope for initial product (§34): general French grammar unrelated to conjugation, full vocabulary system (game uses just enough vocab per scenario), standalone pronunciation course, general dictionary, social networking as primary experience, paid subscriptions as central concept, non-French languages.
 
-### Longer-term ideas (from PRD §43)
+Longer-term ideas (§35, only after core loop is strong): sophisticated simulations, expanded speaking/listening, exam simulation, personalised paths, community challenges, leaderboards/friend challenges (secondary), additional languages.
 
-More sophisticated roleplay, expanded speaking/listening, exam/TCF simulation modes, more C1/C2 content, personalised paths, additional languages, community challenges.
+Open decisions (§31, defaults in PRD): story tone = mystery-led clockwork city, role = apprentice Conjugueur, city/villain names TBD, futur proche in A1, plus-que-parfait late B1/consolidated B2, A1 passé composé preview limited, engine open/prototype-first, voice = future, business model undecided, teacher reviewer TBD.
 
 ---
 
@@ -141,8 +150,9 @@ More sophisticated roleplay, expanded speaking/listening, exam/TCF simulation mo
 
 ```text
 .
-├── PRD_Oneal_Conjugue.md  # product requirements, v2.0
-└── README.md              # this file
+├── PRD_Oneal_Conjugue_v3.md  # current spec, v3.0 — source of truth
+├── PRD_Oneal_Conjugue.md     # superseded spec, v2.0 — history only
+└── README.md                 # this file
 ```
 
 ---
@@ -156,8 +166,8 @@ There is currently no code to run. To review the product definition:
 git clone https://github.com/OnealCodes/Oneal-Conjugue.git
 Set-Location -LiteralPath "Oneal-Conjugue"
 
-# 2. Read the spec
-notepad PRD_Oneal_Conjugue.md
+# 2. Read the spec (v3 is current)
+notepad PRD_Oneal_Conjugue_v3.md
 notepad README.md
 
 # 3. Check git status
@@ -170,13 +180,15 @@ Once implementation starts, this section should be updated with prerequisites, i
 
 ## Next Steps for Implementation
 
-* [ ] Decide stack (web/mobile, frontend, backend, DB, content format, hosting)
-* [ ] Define data model for CEFR levels, tenses/moods, verbs, questions, mistakes, stars/mastery, simulations, progress
-* [ ] Build vertical slice: A1 présent Learn → Practise → Challenge → Mastery
-* [ ] Implement mistake tracking + explanations + review queue
+* [ ] Confirm v3.0 as source of truth and archive v2.0 as history (done in this README; PRD files unchanged)
+* [ ] Decide stack for Phase 0 prototype (Unity / Godot / Three.js-Babylon.js per §23.2)
+* [ ] Define data model for curriculum level map (`form_id, levels, mode, frequency_tier, prerequisites, verb_groups`) + verbs, cases, mistakes, stars/mastery
+* [ ] Build Phase 0 prototype: Workshop assembly + one consequence replay
+* [ ] Build vertical slice: A1 Chapter 1 Learn → Practise → Challenge → Mastery → Use
+* [ ] Implement mistake tracking + Time Glitch review queue
 * [ ] Implement stars (performance) separate from mastery (competence)
-* [ ] Add mixed-tense challenge and first simulation unlock
 * [ ] Add project scaffolding, .gitignore, license, tests
+* [ ] Appoint qualified French teacher to review level map and sample content
 
 ---
 
