@@ -206,15 +206,15 @@
         <div class="gloss">Hello! Are you new here?</div></div>
       <p class="prompt">Complétez : <b>Oui, je <u>___</u> (être) nouveau.</b>
         <span class="gloss"> — build the form, then type it</span></p>
-      <label class="lbl">1 · Choisis la terminaison (ending)</label>
+      <label class="lbl">1 · Choisis la forme (pick the form)</label>
       <div class="build"><span>je&nbsp;</span><span class="slot" id="slot">…</span></div>
       <div class="chips" id="endings">
-        <button data-v="suis">s&thinsp;·&thinsp;uis</button>
-        <button data-v="es">s&thinsp;·&thinsp;es</button>
-        <button data-v="est">&thinsp;·&thinsp;est</button>
-        <button data-v="sommes">somm&thinsp;·&thinsp;es</button>
-        <button data-v="êtes">&thinsp;·&thinsp;êtes</button>
-        <button data-v="sont">s&thinsp;·&thinsp;ont</button>
+        <button data-v="suis">suis</button>
+        <button data-v="es">es</button>
+        <button data-v="est">est</button>
+        <button data-v="sommes">sommes</button>
+        <button data-v="êtes">êtes</button>
+        <button data-v="sont">sont</button>
       </div>
       <label class="lbl" for="typed">2 · Écris la forme complète (type the full form)</label>
       <div class="typerow">
@@ -317,7 +317,7 @@
       chips.forEach(function(x){x.classList.remove('sel')});
       b.classList.add('sel');
       picked = b.getAttribute('data-v');
-      slot.textContent = (picked === 'suis') ? 'suis' : 's' + picked;
+      slot.textContent = picked;
       fb.className = 'feedback';
     });
   });
