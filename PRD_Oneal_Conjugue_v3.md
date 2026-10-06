@@ -792,3 +792,17 @@ If the answer is yes, the game has achieved its purpose.
 |---|---|---|
 | 2.0 | September 2026 | Full learning model, mastery system, simulations |
 | 3.0 | October 2026 | 3D story-driven format, Conjugation Workshop, level-checked curriculum map, vertical slice plan, metrics, risks and open decisions |
+| 3.0 + decision note | 6 October 2026 | Documented database decision: PostgreSQL via local Docker (see Appendix C). No product requirements changed |
+
+---
+
+# **Appendix C: Decision Log — Database and Cost Principles (6 October 2026)**
+
+> **Evaluator note — database decision.**
+>
+> * **PostgreSQL was selected** as the database for Oneal Conjugue!.
+> * **PostgreSQL will run locally using Docker** (official PostgreSQL image via Docker Compose) for the current stage. The application and database remain local. **No Supabase or other hosted database** will be used at this stage.
+> * **Why PostgreSQL instead of SQLite:** the project owner prefers to start with the production-suitable relational database from the beginning rather than migrate from SQLite later.
+> * **Cost principle:** the project prioritizes **free and open-source tools and local development** wherever practical. Current stack (Next.js, TypeScript, Tailwind CSS, PostgreSQL, Docker, Better Auth for later, local file storage) is free/open-source and local.
+> * **Paid services/subscriptions will not be introduced unnecessarily.** No paid accounts, subscriptions, or billable cloud resources will be created without explicit approval. Cloud file storage (Cloudflare R2 as a possible low-cost option) will only be evaluated later if local storage becomes insufficient. Deployment is out of scope for the current stage.
+> * **Timing:** Docker/PostgreSQL is installed and configured only when implementation reaches the database setup phase. It was not installed for this documentation change.

@@ -10,7 +10,7 @@
 **Spec source:** `PRD_Oneal_Conjugue_v3.md` in this folder (v3.0, October 2026)
 **Status:** PRD / pre-production — no playable implementation yet (see Current Development Status)
 
-v3.0 supersedes `PRD_Oneal_Conjugue.md` (v2.0, September 2026), which is kept in this repo for history. This README describes v3.0.
+v3.0 supersedes v2.0 (September 2026). The v2.0 file has been removed from this repo; v3 contains the v2-to-v3 comparison. This README describes v3.0.
 
 ---
 
@@ -108,8 +108,8 @@ Content pipeline (specified): conjugation rules engine generates correct forms +
 What exists in this repo today:
 
 * `PRD_Oneal_Conjugue_v3.md` — current product requirements (v3.0, October 2026, 37 sections + appendices)
-* `PRD_Oneal_Conjugue.md` — superseded requirements (v2.0, September 2026, kept for history)
 * `README.md` — this file
+* `IMPLEMENTATION_PLAN.md` — phased build plan (PostgreSQL via local Docker)
 
 What does **not** exist yet:
 
@@ -151,7 +151,7 @@ Open decisions (§31, defaults in PRD): story tone = mystery-led clockwork city,
 ```text
 .
 ├── PRD_Oneal_Conjugue_v3.md  # current spec, v3.0 — source of truth
-├── PRD_Oneal_Conjugue.md     # superseded spec, v2.0 — history only
+├── IMPLEMENTATION_PLAN.md    # phased build plan
 └── README.md                 # this file
 ```
 
