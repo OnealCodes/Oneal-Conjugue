@@ -820,3 +820,5 @@ If the answer is yes, the game has achieved its purpose.
 > * **Why it improves the design:** it makes the PRD's core principle (§19–§20, stars = performance, mastery = competence) visible at a glance instead of relying on small pill labels alone.
 >
 > **Restyle (7 October 2026, owner request):** `design.html` was restyled to feel like a game, not a dashboard — game HUD (hearts, streak, gems, XP), quest banner with Léo, level journey map, challenge arena with countdown, confetti/XP rewards and heart loss on mistakes — plus a bustling French market palette (each section its own accent colour). The Stars-vs-Mastery distinction above is preserved unchanged.
+>
+> **Simulation excerpt (owner request):** the locked "Une journée à Paris" card now opens a playable 2-turn market excerpt — the player picks replies, wrong forms trigger harmless humorous misunderstandings with explanations, the district visibly reacts at the end (+30 XP). Full simulation stays locked per §13.

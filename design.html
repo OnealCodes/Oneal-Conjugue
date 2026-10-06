@@ -142,6 +142,11 @@
   .glitch{border-left:5px solid var(--orange);background:var(--terra);border-radius:0 10px 10px 0;padding:10px 12px;margin:8px 0;font-size:.9rem}
   .glitch .fix{color:var(--green);font-weight:700}
   .sim{border:2px dashed var(--teal);border-radius:var(--radius);padding:16px;background:#e8faf6}
+  .sim-scene{background:#fff;border-radius:10px;padding:10px 12px;margin:10px 0;font-size:.9rem;min-height:110px}
+  .say{margin:7px 0}
+  .say .spk{font-weight:800}
+  .say.npc .spk{color:var(--teal)} .say.me{text-align:right} .say.me .spk{color:var(--rose)}
+  .say.fx{text-align:center;background:#fff8e1;border-radius:8px;padding:6px}
   .kicker{font-size:.75rem;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--muted)}
   .districts{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px}
   .districts div{flex:1 1 140px;border-radius:10px;padding:10px;font-size:.85rem;border:2px solid}
@@ -251,7 +256,12 @@
         <span class="kicker">🎁 Grande Simulation · verrouillée</span>
         <h2 style="margin:6px 0">Une journée à Paris</h2>
         <p class="sub">Se débloque avec : Maîtrise du passé composé + ★★★ — <i>unlocks with Passé composé mastery + 3 stars</i></p>
-        <button class="cta" style="background:var(--muted);box-shadow:none" onclick="alert('Démo : simulation verrouillée. / Demo: simulation locked.')">Voir un extrait</button>
+        <button class="cta" style="background:var(--teal);box-shadow:0 3px 0 #066155" id="simBtn">▶ Voir un extrait jouable</button>
+        <div id="simPlay" style="display:none">
+          <div class="sim-scene" id="simScene"></div>
+          <div class="chips" id="simOpts"></div>
+          <div class="feedback" id="simFb"></div>
+        </div>
       </div>
     </div>
   </div>
@@ -342,6 +352,74 @@
       fb.innerHTML='<b>Raté ! −1 ❤.</b> « je ' + answer + ' » ne convient pas : le sujet <b>je</b> avec <b>être</b> au présent donne <b>suis</b>. Essaie encore !<br><span class="tag grammar">Mauvais sujet/terminaison · review: je suis, tu es, il est</span>';
       showToast('Raté ! Il te reste ' + hearts + ' ❤');
     }
+  });
+  var simData = [
+    {npc:"Bonjour ! Bienvenue au marché. Vous cherchez quelque chose ?",
+     gloss:"Hello! Welcome to the market. Looking for something ?",
+     react:"Ah, la gare ! Et… vous êtes d'ici ?",
+     opts:[
+      {t:"Je cherche la gare.", ok:true},
+      {t:"Je chercher la gare.", mis:"Elle te tend une pancarte « CHERCHER » 😅",
+       why:"« chercher » seul, c'est l'infinitif. Avec « je » au présent : « je cherche »."},
+      {t:"Je cherches la gare.", mis:"« Tu » ? Elle regarde autour — il n'y a qu'elle ici ! 😅",
+       why:"« cherches » va avec « tu », pas avec « je ». C'est « je cherche »."}]},
+    {npc:"Ah, la gare ! Et… vous êtes d'ici ?",
+     gloss:"Ah, the station! And… are you from here?",
+     react:"Bienvenue ! Suivez cette rue, c'est tout droit !",
+     opts:[
+      {t:"Non, je suis nouveau.", ok:true},
+      {t:"Non, je es nouveau.", mis:"« Je es » ? La marchande fronce les sourcils 😅",
+       why:"« es » va avec « tu ». Avec « je », c'est « je suis »."},
+      {t:"Non, j'est nouveau.", mis:"« J'est » ? Elle éclate de rire 😅",
+       why:"« est » va avec « il / elle ». Avec « je », c'est « je suis »."}]}
+  ];
+  var simIdx = 0, simLog = [], simDone = false;
+  var simPlay = document.getElementById('simPlay');
+  var simScene = document.getElementById('simScene');
+  var simOpts = document.getElementById('simOpts');
+  var simFb = document.getElementById('simFb');
+  function simRender(){
+    simOpts.innerHTML = '';
+    if(simIdx >= simData.length){
+      simScene.innerHTML = simLog.join('') +
+        '<div class="say fx">✨ La place s\'illumine — le quartier réagit à ton français !</div>' +
+        '<div class="say fx"><b>+30 XP · Fin de l\'extrait</b> — la simulation complète se débloque avec la Maîtrise du passé composé + ★★★</div>';
+      return;
+    }
+    var turn = simData[simIdx];
+    simScene.innerHTML = simLog.join('') +
+      '<div class="say npc"><span class="spk">🥖 Marchande :</span> ' + turn.npc +
+      '<div class="gloss">' + turn.gloss + '</div></div>' +
+      '<div class="say"><b>Choisis ta réponse :</b> <span class="gloss">/ choose your reply</span></div>';
+    turn.opts.forEach(function(o){
+      var b = document.createElement('button');
+      b.textContent = o.t;
+      b.addEventListener('click', function(){
+        if(o.ok){
+          simLog.push('<div class="say me"><span class="spk">Toi :</span> ' + o.t + '</div>');
+          simLog.push('<div class="say npc"><span class="spk">🥖 Marchande :</span> ' + turn.react + '</div>');
+          simFb.className = 'feedback';
+          simIdx++;
+          simRender();
+          if(simIdx >= simData.length){
+            xp += 30; xpEl.textContent = xp;
+            confetti();
+            showToast('+30 XP · Extrait terminé 🎭');
+          }
+        } else {
+          simFb.className = 'feedback ko';
+          simFb.innerHTML = '<b>' + o.mis + '</b><br>' + o.why;
+        }
+      });
+      simOpts.appendChild(b);
+    });
+  }
+  document.getElementById('simBtn').addEventListener('click', function(){
+    var open = simPlay.style.display === 'none';
+    simPlay.style.display = open ? 'block' : 'none';
+    this.textContent = open ? '✕ Cacher l\'extrait' : '▶ Voir un extrait jouable';
+    if(open && simIdx === 0 && !simDone){ simRender(); }
+    if(open){ document.getElementById('simulations').scrollIntoView({behavior:'smooth', block:'nearest'}); }
   });
   var links = document.querySelectorAll('#mainnav a');
   links.forEach(function(a){
