@@ -793,6 +793,7 @@ If the answer is yes, the game has achieved its purpose.
 | 2.0 | September 2026 | Full learning model, mastery system, simulations |
 | 3.0 | October 2026 | 3D story-driven format, Conjugation Workshop, level-checked curriculum map, vertical slice plan, metrics, risks and open decisions |
 | 3.0 + decision note | 6 October 2026 | Documented database decision: PostgreSQL via local Docker (see Appendix C). No product requirements changed |
+| 3.0 + design preview | 6 October 2026 | Added `design.html` preview + refinement note (see Appendix D). No product requirements changed |
 
 ---
 
@@ -806,3 +807,13 @@ If the answer is yes, the game has achieved its purpose.
 > * **Cost principle:** the project prioritizes **free and open-source tools and local development** wherever practical. Current stack (Next.js, TypeScript, Tailwind CSS, PostgreSQL, Docker, Better Auth for later, local file storage) is free/open-source and local.
 > * **Paid services/subscriptions will not be introduced unnecessarily.** No paid accounts, subscriptions, or billable cloud resources will be created without explicit approval. Cloud file storage (Cloudflare R2 as a possible low-cost option) will only be evaluated later if local storage becomes insufficient. Deployment is out of scope for the current stage.
 > * **Timing:** Docker/PostgreSQL is installed and configured only when implementation reaches the database setup phase. It was not installed for this documentation change.
+
+---
+
+# **Appendix D: Design Preview Refinement (6 October 2026)**
+
+> **Evaluator note — design preview refinement (Task 2).**
+>
+> * **Refinement made:** Stars-vs-Mastery distinction. In the first draft of `design.html`, the Stars card and the Mastery card looked identical (same white card, same heading pattern), so tonight's performance (★★☆) was easy to confuse with lasting competence (62 %).
+> * **What changed in `design.html`:** the two cards now have distinct visual languages — a gold left-accent + warm tint for Stars, a blue left-accent for Mastery, star (★) vs gauge (▮) heading icons — plus an explicit legend line above them: "★ Étoiles = ce cas, ce soir · ▮ Maîtrise = compétence durable".
+> * **Why it improves the design:** it makes the PRD's core principle (§19–§20, stars = performance, mastery = competence) visible at a glance instead of relying on small pill labels alone.

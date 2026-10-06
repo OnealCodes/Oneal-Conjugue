@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Oneal Conjugue! — Aperçu visuel (Design Preview)</title>
+<style>
+  :root{
+    --navy:#1b2a4a; --ink:#2a3350; --muted:#6b7390;
+    --paper:#faf7f1; --card:#ffffff; --line:#e7e1d4;
+    --blue:#0055a4; --red:#ef4135; --gold:#e8a100; --gold-soft:#fdf3d7;
+    --green:#2e7d4f; --green-soft:#e3f2e7;
+    --radius:14px;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:"Segoe UI",system-ui,-apple-system,Roboto,"Helvetica Neue",Arial,sans-serif;
+    background:var(--paper);color:var(--ink);line-height:1.5}
+  .tricolor{height:6px;background:linear-gradient(to right,var(--blue) 0 33%,#fff 33% 66%,var(--red) 66% 100%)}
+  header.top{background:var(--navy);color:#fff;padding:14px 22px;display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+  .logo{font-size:1.35rem;font-weight:800;letter-spacing:.2px}
+  .logo small{display:block;font-size:.72rem;font-weight:400;color:#c6cde3}
+  nav.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-left:8px}
+  nav.tabs a{color:#dbe1f2;text-decoration:none;padding:8px 14px;border-radius:999px;font-size:.92rem;border:1px solid transparent}
+  nav.tabs a.active{background:#fff;color:var(--navy);font-weight:700}
+  nav.tabs a:hover{border-color:#8fa0c9}
+  .cta{margin-left:auto;background:var(--red);color:#fff;border:none;border-radius:999px;
+    padding:11px 22px;font-size:1rem;font-weight:700;cursor:pointer}
+  .cta:hover{filter:brightness(1.08)}
+  .wrap{max-width:1180px;margin:0 auto;padding:22px}
+  .demo-note{background:#eef3ff;border:1px dashed var(--blue);color:var(--navy);border-radius:10px;
+    padding:10px 14px;font-size:.88rem;margin-bottom:18px}
+  /* CEFR + stages */
+  .strip{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:18px}
+  @media(max-width:860px){.strip{grid-template-columns:1fr}}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:18px}
+  .card h2{margin:0 0 4px;font-size:1.02rem;color:var(--navy)}
+  .card p.sub{margin:0 0 12px;color:var(--muted);font-size:.88rem}
+  .cef{display:flex;gap:6px;flex-wrap:wrap}
+  .cef span{padding:7px 12px;border-radius:999px;border:1px solid var(--line);font-weight:700;font-size:.85rem;color:var(--muted);background:#f4f1e8}
+  .cef span.on{background:var(--navy);color:#fff;border-color:var(--navy)}
+  .cef span.next{border-color:var(--blue);color:var(--blue)}
+  .stages{display:flex;gap:6px;flex-wrap:wrap;align-items:center;font-size:.85rem}
+  .stages b{background:var(--green-soft);color:var(--green);border-radius:8px;padding:6px 10px}
+  .stages b.now{background:var(--green);color:#fff}
+  .stages i{color:var(--muted);font-style:normal}
+  /* main grid */
+  .grid{display:grid;grid-template-columns:1.35fr 1fr;gap:16px}
+  @media(max-width:960px){.grid{grid-template-columns:1fr}}
+  .scene{background:#f2ecff;border:1px solid #d9cdf3;border-radius:10px;padding:12px 14px;margin-bottom:12px;font-size:.95rem}
+  .scene .who{font-weight:700;color:#5b3fa8}
+  .gloss{color:var(--muted);font-size:.83rem}
+  .prompt{font-size:1.15rem;margin:10px 0;color:var(--navy)}
+  .build{background:var(--navy);color:#fff;border-radius:12px;padding:16px;text-align:center;
+    font-size:1.6rem;letter-spacing:.5px;margin:12px 0;min-height:64px}
+  .build .slot{border-bottom:3px dashed var(--gold);padding:0 10px;min-width:90px;display:inline-block}
+  .chips{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0}
+  .chips button{border:2px solid var(--line);background:#fff;border-radius:999px;padding:8px 15px;
+    font-size:.95rem;cursor:pointer;color:var(--ink)}
+  .chips button:hover{border-color:var(--blue)}
+  .chips button.sel{background:var(--blue);border-color:var(--blue);color:#fff;font-weight:700}
+  .chips button:focus-visible,.cta:focus-visible,input:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+  label.lbl{display:block;font-size:.85rem;color:var(--muted);margin:12px 0 4px}
+  .typerow{display:flex;gap:8px}
+  input[type=text]{flex:1;border:2px solid var(--line);border-radius:10px;padding:11px 12px;font-size:1.05rem}
+  .check{background:var(--green);color:#fff;border:none;border-radius:10px;padding:11px 20px;
+    font-size:1rem;font-weight:700;cursor:pointer}
+  .feedback{border-radius:10px;padding:12px 14px;margin-top:12px;font-size:.93rem;display:none}
+  .feedback.ok{display:block;background:var(--green-soft);border:1px solid var(--green);color:#17452b}
+  .feedback.ko{display:block;background:#fdeceb;border:1px solid var(--red);color:#7c1d16}
+  .tag{display:inline-block;font-size:.75rem;font-weight:700;border-radius:6px;padding:2px 8px;margin-top:6px}
+  .tag.grammar{background:#fff;border:1px solid currentColor}
+  /* side panels */
+  .side{display:flex;flex-direction:column;gap:16px}
+  .legend{background:var(--navy);color:#e6ebf7;border-radius:10px;padding:10px 14px;font-size:.83rem}
+  .legend b.g{color:var(--gold)} .legend b.b{color:#9cc2ee}
+  .card.stars-card{border-left:6px solid var(--gold);background:linear-gradient(#fffdf4,#fff)}
+  .card.master-card{border-left:6px solid var(--blue)}
+  .stars{font-size:1.5rem;letter-spacing:3px;color:var(--gold)}
+  .stars .off{color:#d8d2c2}
+  .meter{height:12px;background:#eee9da;border-radius:999px;overflow:hidden;margin:8px 0}
+  .meter i{display:block;height:100%;background:linear-gradient(to right,var(--blue),#3f8fe0);border-radius:999px}
+  .dim{display:grid;grid-template-columns:auto 1fr auto;gap:8px;align-items:center;font-size:.83rem;margin:4px 0}
+  .dim .bar{height:8px;background:#eee9da;border-radius:999px;overflow:hidden}
+  .dim .bar i{display:block;height:100%;background:var(--blue)}
+  .pill{display:inline-block;font-size:.78rem;font-weight:700;border-radius:999px;padding:3px 10px}
+  .pill.gold{background:var(--gold-soft);color:#8a5f00;border:1px solid var(--gold)}
+  .pill.blue{background:#e7f0fb;color:var(--blue);border:1px solid var(--blue)}
+  .glitch{border-left:4px solid var(--red);background:#fff8f6;border-radius:0 10px 10px 0;padding:10px 12px;margin:8px 0;font-size:.9rem}
+  .glitch .fix{color:var(--green);font-weight:700}
+  .sim{border:2px dashed var(--muted);border-radius:var(--radius);padding:16px;background:#f6f4ee}
+  .sim.locked{opacity:.92}
+  .kicker{font-size:.75rem;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--muted)}
+  .districts{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px}
+  .districts div{flex:1 1 140px;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px;font-size:.85rem}
+  .districts div.open{border-color:var(--green)}
+  footer{color:var(--muted);font-size:.82rem;text-align:center;padding:20px}
+</style>
+</head>
+<body>
+<div class="tricolor"></div>
+<header class="top">
+  <div class="logo">Oneal Conjugue! <small>Apprenti Conjugueur · Chapitre A1 « L'Arrivée »</small></div>
+  <nav class="tabs" id="mainnav">
+    <a href="#atelier" class="active">Atelier</a>
+    <a href="#cas">Cas</a>
+    <a href="#simulations">Simulations</a>
+    <a href="#progres">Progrès</a>
+  </nav>
+  <button class="cta" onclick="document.getElementById('atelier').scrollIntoView({behavior:'smooth'})">Continuer le cas 3 →</button>
+</header>
+
+<div class="wrap">
+  <div class="demo-note"><b>Aperçu visuel</b> — maquette statique de démonstration (personnages et phrases fictifs). Aucune progression réelle n'est enregistrée. <span class="gloss">Visual design preview — demo only, no real progress is saved.</span></div>
+
+  <div class="strip">
+    <div class="card">
+      <h2>Progression CECR · CEFR</h2>
+      <p class="sub">Un mystère en six chapitres — <i>one story, six chapters</i></p>
+      <div class="cef"><span class="on">A1 · L'Arrivée</span><span class="next">A2 · Les Archives</span><span>B1</span><span>B2</span><span>C1</span><span>C2</span></div>
+    </div>
+    <div class="card">
+      <h2>Parcours du cas · Learning loop</h2>
+      <p class="sub">Chaque forme suit le même parcours — <i>every form follows this path</i></p>
+      <div class="stages"><b>Apprendre</b><i>→</i><b class="now">S'exercer</b><i>→</i><b>Défi</b><i>→</i><b>Maîtrise</b><i>→</i><b>Utiliser</b></div>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="card" id="atelier">
+      <span class="kicker">Cas 3 — La Place du présent · L'Atelier de conjugaison</span>
+      <h2 style="margin-top:6px">Le marchand vous accueille</h2>
+      <div class="scene"><span class="who">Marchand :</span> Bonjour ! Vous êtes nouveau ici ?
+        <div class="gloss">Hello! Are you new here?</div></div>
+      <p class="prompt">Complétez : <b>Oui, je <u>___</u> (être) nouveau.</b>
+        <span class="gloss"> — build the form, then type it</span></p>
+      <label class="lbl">1 · Choisis la terminaison (ending)</label>
+      <div class="build"><span>je&nbsp;</span><span class="slot" id="slot">…</span></div>
+      <div class="chips" id="endings">
+        <button data-v="suis">s&thinsp;·&thinsp;uis</button>
+        <button data-v="es">s&thinsp;·&thinsp;es</button>
+        <button data-v="est">&thinsp;·&thinsp;est</button>
+        <button data-v="sommes">somm&thinsp;·&thinsp;es</button>
+        <button data-v="êtes">&thinsp;·&thinsp;êtes</button>
+        <button data-v="sont">s&thinsp;·&thinsp;ont</button>
+      </div>
+      <label class="lbl" for="typed">2 · Écris la forme complète (type the full form)</label>
+      <div class="typerow">
+        <input type="text" id="typed" placeholder="je …" autocomplete="off" lang="fr">
+        <button class="check" id="checkBtn">Vérifier</button>
+      </div>
+      <div class="feedback" id="feedback"></div>
+    </div>
+
+    <div class="side">
+      <div class="legend"><b class="g">★ Étoiles</b> = ce cas, ce soir &nbsp;·&nbsp; <b class="b">▮ Maîtrise</b> = compétence durable <span class="gloss" style="color:#aeb8d4">— stars are tonight, mastery is forever</span></div>
+      <div class="card stars-card" id="progres">
+        <h2>★ Étoiles du cas <span class="pill gold">performance · ce soir</span></h2>
+        <p class="sub">Les étoiles récompensent ce cas — <i>stars reward tonight's run</i></p>
+        <div class="stars" id="stars">★★<span class="off">★</span></div>
+      </div>
+      <div class="card master-card">
+        <h2>▮ Maîtrise · Présent <span class="pill blue">compétence · durable</span></h2>
+        <p class="sub">La maîtrise mesure ta compétence réelle — <i>mastery tracks lasting ability</i></p>
+        <div class="meter"><i style="width:62%"></i></div>
+        <div style="font-size:.9rem"><b>62 %</b> <span class="gloss">· objectif 85 % (Mastered ≥ 85 %)</span></div>
+        <div class="dim"><span>Reconnaissance</span><div class="bar"><i style="width:85%"></i></div><b>Fort</b></div>
+        <div class="dim"><span>Conjugaison</span><div class="bar"><i style="width:70%"></i></div><b>Bien</b></div>
+        <div class="dim"><span>Production</span><div class="bar"><i style="width:45%"></i></div><b>À travailler</b></div>
+        <div class="dim"><span>Contexte</span><div class="bar"><i style="width:50%"></i></div><b>À travailler</b></div>
+      </div>
+      <div class="card" id="cas">
+        <h2>Banque de fautes · Time Glitches</h2>
+        <p class="sub">Tes erreurs reviennent dans l'histoire — <i>weak areas return as story glitches</i></p>
+        <div class="glitch">Hier, je <s>mange</s> au restaurant.<br><span class="fix">→ Hier, j'ai mangé au restaurant.</span><br><span class="tag grammar">Mauvais temps · wrong tense</span></div>
+        <div class="glitch">Tu <s>est</s> prêt ?<br><span class="fix">→ Tu es prêt ?</span><br><span class="tag grammar">Mauvais sujet · wrong subject</span></div>
+      </div>
+      <div class="sim locked" id="simulations">
+        <span class="kicker">Grande Simulation · verrouillée</span>
+        <h2 style="margin:6px 0">Une journée à Paris</h2>
+        <p class="sub">Se débloque avec : Maîtrise du passé composé + ★★★ — <i>unlocks with Passé composé mastery + 3 stars</i></p>
+        <button class="cta" style="background:var(--muted)" onclick="alert('Démo : simulation verrouillée. / Demo: simulation locked.')">Voir un extrait</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:16px">
+    <h2>Quartiers · Districts</h2>
+    <p class="sub">Chaque quartier est une grammaire — <i>every district is a grammar</i></p>
+    <div class="districts">
+      <div class="open"><b>Place du présent</b><br>tout se passe maintenant</div>
+      <div><b>Les Archives 🔒</b><br>événements passés (A2)</div>
+      <div><b>Quartier des Brumes 🔒</b><br>souvenirs, imparfait (A2)</div>
+      <div><b>L'Observatoire 🔒</b><br>projets, futur (A2)</div>
+    </div>
+  </div>
+</div>
+
+<footer>Oneal Conjugue! — Léo 🇫🇷 t'accompagne · <i>design preview, fictional demo content</i></footer>
+
+<script>
+(function(){
+  var slot = document.getElementById('slot');
+  var chips = document.querySelectorAll('#endings button');
+  var typed = document.getElementById('typed');
+  var fb = document.getElementById('feedback');
+  var stars = document.getElementById('stars');
+  var picked = '';
+  chips.forEach(function(b){
+    b.addEventListener('click', function(){
+      chips.forEach(function(x){x.classList.remove('sel')});
+      b.classList.add('sel');
+      picked = b.getAttribute('data-v');
+      slot.textContent = (picked === 'suis') ? 'suis' : 's' + picked;
+      fb.className = 'feedback';
+    });
+  });
+  document.getElementById('checkBtn').addEventListener('click', function(){
+    var val = typed.value.trim().toLowerCase().replace(/^j['’]\s*/, '').replace(/^je\s+/, '');
+    var answer = val || picked;
+    if(!answer){ fb.className='feedback ko'; fb.textContent='Choisis une terminaison ou écris la forme. / Pick an ending or type the form.'; return; }
+    if(answer === 'suis'){
+      fb.className='feedback ok';
+      fb.innerHTML='<b>Bravo !</b> « Je suis nouveau. » — <i>être</i> au présent, 1<sup>re</sup> personne. Léo est fier de toi !<br><span class="tag grammar">Présent · être · je</span>';
+      stars.innerHTML='★★★';
+    } else {
+      fb.className='feedback ko';
+      fb.innerHTML='<b>Pas encore.</b> « je ' + answer + ' » ne convient pas ici : le sujet <b>je</b> avec <b>être</b> au présent donne <b>suis</b>. Essaie encore !<br><span class="tag grammar">Mauvais sujet/terminaison · review: je suis, tu es, il est</span>';
+    }
+  });
+  var links = document.querySelectorAll('#mainnav a');
+  links.forEach(function(a){
+    a.addEventListener('click', function(){
+      links.forEach(function(x){x.classList.remove('active')});
+      a.classList.add('active');
+    });
+  });
+})();
+</script>
+</body>
+</html>
