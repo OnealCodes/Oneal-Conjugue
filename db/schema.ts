@@ -51,3 +51,11 @@ export const cases = pgTable("cases", {
   title: text("title").notNull(),
   dialogue: jsonb("dialogue"),
 });
+
+// A1 verb bank: infinitive + group + present-tense forms (je → ils).
+export const verbs = pgTable("verbs", {
+  infinitive: text("infinitive").primaryKey(),
+  group: text("group").notNull(), // er | ir | re | irregular | spelling
+  level: text("level").notNull().default("A1"),
+  present: jsonb("present").notNull(), // { je, tu, il, nous, vous, ils }
+});

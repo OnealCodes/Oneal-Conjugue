@@ -21,6 +21,27 @@ export default function Home() {
       <ConsequenceReplay />
       <FunRating />
 
+      <nav className="grid gap-2 sm:grid-cols-2">
+        <a
+          href="/jouer"
+          className="rounded-2xl bg-[#1b2a4a] p-5 font-bold text-white hover:brightness-125"
+        >
+          ⚔ Jouer les cas A1 →
+          <span className="block text-sm font-normal text-white/70">
+            8 cas · étoiles et maîtrise enregistrées
+          </span>
+        </a>
+        <a
+          href="/progres"
+          className="rounded-2xl border-2 border-blue-700 bg-white p-5 font-bold text-blue-800 hover:bg-blue-50"
+        >
+          🏆 Mon progrès →
+          <span className="block text-sm font-normal text-gray-500">
+            maîtrise, étoiles, banque de fautes
+          </span>
+        </a>
+      </nav>
+
       <footer className="pb-6 text-center text-xs text-gray-500">
         Oneal Conjugue! — prototype Phase 0 · données fictives ·{" "}
         <em>fictional demo data, no backend, no database yet</em>

@@ -54,6 +54,14 @@ progress (stars separate from mastery), mistakes, cases. Drizzle ORM wired;
 `GET /api/health` verified live against the DB. Remaining: A1 cases content,
 stars/mastery logic, dashboard, teacher review.
 
+**Status (7 Oct 2026): slice playable end-to-end.** Seeded verb bank (20 verbs,
+présent forms), 3 curriculum forms, 8 A1 cases (16 turns, incl. passé composé
+preview). APIs: `/api/cases`, `/api/attempts` (mastery +8/−2, mistake rows),
+`/api/stars` (best-of), `/api/progress`. Pages: `/jouer` (case player with
+explanations + stars) and `/progres` (fluency meters, stars, mistake bank).
+Verified: production build, live attempt→mastery→mistake→dashboard round-trip.
+Remaining: teacher review of the level map and sample content.
+
 Outputs when complete:
 
 - Next.js app running locally (frontend + Route Handlers)
