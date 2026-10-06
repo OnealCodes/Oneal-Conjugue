@@ -37,7 +37,7 @@ Outputs when complete:
 - One consequence replay (e.g. passé composé vs imparfait shows different replay)
 - Playtest fun rating collected
 
-Database/ nimic not required here. Do not set up PostgreSQL just for this phase.
+Database setup not required here. Do not set up PostgreSQL just for this phase.
 
 ### Phase 1 — Vertical slice: A1 Chapter 1 *L'Arrivée*
 
