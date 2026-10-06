@@ -822,3 +822,5 @@ If the answer is yes, the game has achieved its purpose.
 > **Restyle (7 October 2026, owner request):** `design.html` was restyled to feel like a game, not a dashboard — game HUD (hearts, streak, gems, XP), quest banner with Léo, level journey map, challenge arena with countdown, confetti/XP rewards and heart loss on mistakes — plus a bustling French market palette (each section its own accent colour). The Stars-vs-Mastery distinction above is preserved unchanged.
 >
 > **Simulation excerpt (owner request):** the locked "Une journée à Paris" card now opens a playable 2-turn market excerpt — the player picks replies, wrong forms trigger harmless humorous misunderstandings with explanations, the district visibly reacts at the end (+30 XP). Full simulation stays locked per §13.
+>
+> **Animated actors stand-in (owner request, option 2):** the excerpt now stages two CSS-animated actors (marchande 👩‍🌾, apprentice 🧑‍🎓) under a market awning — walk-in entrance, idle bobbing, jump-for-joy on correct replies, shake + "❓" on mistakes. This is a 2D preview stand-in only; true animated 3D characters remain prototype-phase work (engine decision, §31).

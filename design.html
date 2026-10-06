@@ -143,6 +143,19 @@
   .glitch .fix{color:var(--green);font-weight:700}
   .sim{border:2px dashed var(--teal);border-radius:var(--radius);padding:16px;background:#e8faf6}
   .sim-scene{background:#fff;border-radius:10px;padding:10px 12px;margin:10px 0;font-size:.9rem;min-height:110px}
+  .stage{border-radius:10px;overflow:hidden;margin:10px 0;background:linear-gradient(#bfe6f7 0 55%,#9ed69a 55% 100%)}
+  .awning{height:26px;background:repeating-linear-gradient(90deg,var(--red) 0 22px,#fff 22px 44px);border-bottom:4px solid #b53a12}
+  .actors{display:flex;justify-content:space-around;align-items:flex-end;padding:2px 10px 8px;min-height:96px}
+  .actor{font-size:3rem;line-height:1;position:relative;transition:transform .3s}
+  .actor .react{position:absolute;top:-22px;right:-6px;font-size:1.3rem;opacity:0;transition:opacity .2s}
+  .actor.idle{animation:bob 2.4s ease-in-out infinite}
+  @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+  .actor.enter{animation:walkin .8s ease-out}
+  @keyframes walkin{from{transform:translateX(-120px);opacity:0}to{transform:translateX(0);opacity:1}}
+  .actor.happy{animation:jump .6s ease 2}
+  @keyframes jump{0%,100%{transform:translateY(0)}40%{transform:translateY(-22px) rotate(-6deg)}}
+  .actor.sad{animation:shake .4s}
+  .actor.show-react .react{opacity:1}
   .say{margin:7px 0}
   .say .spk{font-weight:800}
   .say.npc .spk{color:var(--teal)} .say.me{text-align:right} .say.me .spk{color:var(--rose)}
@@ -258,6 +271,13 @@
         <p class="sub">Se débloque avec : Maîtrise du passé composé + ★★★ — <i>unlocks with Passé composé mastery + 3 stars</i></p>
         <button class="cta" style="background:var(--teal);box-shadow:0 3px 0 #066155" id="simBtn">▶ Voir un extrait jouable</button>
         <div id="simPlay" style="display:none">
+          <div class="stage">
+            <div class="awning"></div>
+            <div class="actors">
+              <div class="actor idle" id="simNpc">👩‍🌾<span class="react" id="npcReact">✨</span></div>
+              <div class="actor idle" id="simMe">🧑‍🎓<span class="react" id="meReact">💬</span></div>
+            </div>
+          </div>
           <div class="sim-scene" id="simScene"></div>
           <div class="chips" id="simOpts"></div>
           <div class="feedback" id="simFb"></div>
@@ -378,6 +398,18 @@
   var simScene = document.getElementById('simScene');
   var simOpts = document.getElementById('simOpts');
   var simFb = document.getElementById('simFb');
+  var simNpc = document.getElementById('simNpc');
+  var simMe = document.getElementById('simMe');
+  var npcReact = document.getElementById('npcReact');
+  var actT = null;
+  function simAct(mood, glyph){
+    simNpc.classList.remove('happy', 'sad', 'show-react');
+    void simNpc.offsetWidth;
+    npcReact.textContent = glyph;
+    simNpc.classList.add(mood, 'show-react');
+    if(actT){ clearTimeout(actT); }
+    actT = setTimeout(function(){ simNpc.classList.remove('happy', 'sad', 'show-react'); }, 1200);
+  }
   function simRender(){
     simOpts.innerHTML = '';
     if(simIdx >= simData.length){
@@ -400,6 +432,7 @@
           simLog.push('<div class="say npc"><span class="spk">🥖 Marchande :</span> ' + turn.react + '</div>');
           simFb.className = 'feedback';
           simIdx++;
+          simAct('happy', '✨');
           simRender();
           if(simIdx >= simData.length){
             xp += 30; xpEl.textContent = xp;
@@ -407,6 +440,7 @@
             showToast('+30 XP · Extrait terminé 🎭');
           }
         } else {
+          simAct('sad', '❓');
           simFb.className = 'feedback ko';
           simFb.innerHTML = '<b>' + o.mis + '</b><br>' + o.why;
         }
@@ -418,7 +452,12 @@
     var open = simPlay.style.display === 'none';
     simPlay.style.display = open ? 'block' : 'none';
     this.textContent = open ? '✕ Cacher l\'extrait' : '▶ Voir un extrait jouable';
-    if(open && simIdx === 0 && !simDone){ simRender(); }
+    if(open && simIdx === 0 && !simDone){
+      simNpc.classList.add('enter');
+      simMe.classList.add('enter');
+      setTimeout(function(){ simNpc.classList.remove('enter'); simMe.classList.remove('enter'); }, 900);
+      simRender();
+    }
     if(open){ document.getElementById('simulations').scrollIntoView({behavior:'smooth', block:'nearest'}); }
   });
   var links = document.querySelectorAll('#mainnav a');
