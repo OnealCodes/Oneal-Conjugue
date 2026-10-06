@@ -47,6 +47,13 @@ Database setup not required here. Do not set up PostgreSQL just for this phase.
 
 ### Phase 1 — Vertical slice: A1 Chapter 1 *L'Arrivée*
 
+**Status (7 Oct 2026): database foundation done.** PostgreSQL 16 runs locally in
+Docker (`oneal-conjugue-db`, host port 5433 — 5432 belongs to another local
+project and was left untouched). Schema migrated: profiles, curriculum_forms,
+progress (stars separate from mastery), mistakes, cases. Drizzle ORM wired;
+`GET /api/health` verified live against the DB. Remaining: A1 cases content,
+stars/mastery logic, dashboard, teacher review.
+
 Outputs when complete:
 
 - Next.js app running locally (frontend + Route Handlers)
