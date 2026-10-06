@@ -31,6 +31,12 @@ No code, database, or prototype exists yet.
 
 ### Phase 0 — Prototype validation (no database yet)
 
+**Status (7 Oct 2026): built and verified.** Next.js page at `/` with Workshop loop
+(`components/Workshop.tsx`), consequence replay (`components/ConsequenceReplay.tsx`)
+and fun check (`components/FunRating.tsx`), all on fictional demo data
+(`lib/demo-data.ts`). `npm run build` passes; production page served locally with
+HTTP 200 and all content present. No database, no auth — per plan.
+
 Outputs when complete:
 
 - Minimal Next.js page proving the Workshop loop (assemble Subject + Stem + Ending)

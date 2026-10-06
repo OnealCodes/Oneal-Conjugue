@@ -150,8 +150,13 @@ Open decisions (§31, defaults in PRD): story tone = mystery-led clockwork city,
 
 ```text
 .
+├── app/                      # Phase 0 prototype (Next.js): page + layout + theme
+├── components/               # Workshop, ConsequenceReplay, FunRating
+├── lib/                      # demo-data.ts (fictional Phase 0 content only)
 ├── PRD_Oneal_Conjugue_v3.md  # current spec, v3.0 — source of truth
 ├── IMPLEMENTATION_PLAN.md    # phased build plan
+├── design.html               # visual design reference (do not overwrite with app code)
+├── package.json              # Next.js + React + Tailwind dependencies
 └── README.md                 # this file
 ```
 
@@ -159,31 +164,33 @@ Open decisions (§31, defaults in PRD): story tone = mystery-led clockwork city,
 
 ## Running the Project Locally
 
-There is currently no code to run. To review the product definition:
+Phase 0 prototype (Next.js, no database yet). Prerequisites: Node.js 20+.
 
 ```powershell
 # 1. Clone (do not push unless requested)
 git clone https://github.com/OnealCodes/Oneal-Conjugue.git
 Set-Location -LiteralPath "Oneal-Conjugue"
 
-# 2. Read the spec (v3 is current)
-notepad PRD_Oneal_Conjugue_v3.md
-notepad README.md
+# 2. Install and run the Phase 0 prototype
+npm install
+npm run dev
+# open http://localhost:3000 — Workshop loop + consequence replay + fun check
 
-# 3. Check git status
-git status
+# 3. Production check
+npm run build
 ```
 
-Once implementation starts, this section should be updated with prerequisites, install, env vars, and start commands.
+To review the product definition: `PRD_Oneal_Conjugue_v3.md` (v3 is current).
+To review the visual reference: open `design.html` directly in a browser.
 
 ---
 
 ## Next Steps for Implementation
 
-* [ ] Confirm v3.0 as source of truth and archive v2.0 as history (done in this README; PRD files unchanged)
-* [ ] Decide stack for Phase 0 prototype (Unity / Godot / Three.js-Babylon.js per §23.2)
+* [x] Confirm v3.0 as source of truth (v2.0 file removed by owner)
+* [x] Decide stack for Phase 0 prototype: Next.js + TypeScript + Tailwind (web)
+* [x] Build Phase 0 prototype: Workshop assembly + one consequence replay (done, demo data only)
 * [ ] Define data model for curriculum level map (`form_id, levels, mode, frequency_tier, prerequisites, verb_groups`) + verbs, cases, mistakes, stars/mastery
-* [ ] Build Phase 0 prototype: Workshop assembly + one consequence replay
 * [ ] Build vertical slice: A1 Chapter 1 Learn → Practise → Challenge → Mastery → Use
 * [ ] Implement mistake tracking + Time Glitch review queue
 * [ ] Implement stars (performance) separate from mastery (competence)
