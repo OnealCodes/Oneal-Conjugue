@@ -6,6 +6,7 @@ interface ProgressRow {
   formId: string;
   stars: number;
   mastery: number;
+  dueForReview: boolean;
 }
 
 interface MistakeRow {
@@ -65,6 +66,11 @@ export default function Progres() {
             </div>
             {p.mastery >= 85 && (
               <p className="mt-1 text-xs font-bold text-green-700">Maîtrisé ✓ (≥ 85 %)</p>
+            )}
+            {p.dueForReview && (
+              <p className="mt-1 text-xs font-bold text-orange-600">
+                ⏳ À réviser — 3+ jours sans pratique (retention check)
+              </p>
             )}
           </div>
         ))}

@@ -58,4 +58,9 @@ export const verbs = pgTable("verbs", {
   group: text("group").notNull(), // er | ir | re | irregular | spelling
   level: text("level").notNull().default("A1"),
   present: jsonb("present").notNull(), // { je, tu, il, nous, vous, ils }
+  // Phase 2: compound + past/future tenses.
+  auxiliary: text("auxiliary").notNull().default("avoir"), // avoir | être
+  participle: text("participle"),
+  imparfaitStem: text("imparfait_stem"),
+  futurStem: text("futur_stem"), // null = regular (infinitive-based)
 });

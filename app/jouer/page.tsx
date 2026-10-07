@@ -10,6 +10,8 @@ interface Turn {
   answer: string;
   distractors: string[];
   explanation: string;
+  formId: string;
+  mixed?: boolean;
   preview?: boolean;
 }
 
@@ -74,7 +76,7 @@ export default function Jouer() {
       return;
     }
     const ok = given === turn.answer.toLowerCase();
-    const formId = turn.preview ? "passe_compose" : "present";
+    const formId = turn.formId;
     await fetch("/api/attempts", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -118,9 +120,11 @@ export default function Jouer() {
     return (
       <main className="mx-auto max-w-4xl space-y-3 p-4 sm:p-6">
         <a href="/" className="text-sm text-blue-700">← Accueil</a>
-        <h1 className="text-2xl font-extrabold text-[#1b2a4a]">Cas · A1 « L&apos;Arrivée »</h1>
+        <h1 className="text-2xl font-extrabold text-[#1b2a4a]">Cas · A1–A2</h1>
         <div className="grid gap-2">
-          {cases.map((c, i) => (
+          {cases
+            .filter((c) => c.chapter !== "SIM")
+            .map((c, i) => (
             <button
               key={c.id}
               onClick={() => start(c.id)}
@@ -129,7 +133,9 @@ export default function Jouer() {
               <strong>
                 Cas {i + 1} — {c.title}
               </strong>
-              <span className="block text-sm text-gray-500">{c.dialogue.scene}</span>
+              <span className="block text-sm text-gray-500">
+                [{c.chapter}] {c.dialogue.scene}
+              </span>
             </button>
           ))}
         </div>
@@ -169,6 +175,11 @@ export default function Jouer() {
       <section className="rounded-2xl border-t-8 border-red-500 bg-white p-6 shadow-sm">
         <p className="text-xs font-extrabold uppercase tracking-widest text-gray-500">
           {active.title} · {turnIdx + 1}/{active.dialogue.turns.length}
+          {turn?.mixed && (
+            <span className="ml-2 rounded-full bg-orange-100 px-2 py-0.5 text-orange-700">
+              ⚡ temps non annoncé
+            </span>
+          )}
         </p>
         <div className="mt-2 rounded-xl bg-violet-100 p-3 text-[0.95rem]">
           <strong className="text-violet-800">{active.dialogue.scene}</strong>

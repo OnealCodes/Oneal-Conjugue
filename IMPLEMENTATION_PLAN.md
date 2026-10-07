@@ -62,6 +62,15 @@ explanations + stars) and `/progres` (fluency meters, stars, mistake bank).
 Verified: production build, live attempt→mastery→mistake→dashboard round-trip.
 Remaining: teacher review of the level map and sample content.
 
+**Status (7 Oct 2026): Phase 2 content playable end-to-end.** Verb bank grown to
+32 (participles, auxiliaries, imparfait/futur stems via `lib/conjugate.ts`);
+5 curriculum forms (présent, futur proche, passé composé, imparfait, futur);
+15 cases (8 A1 + 6 A2 + sim1). New: mixed-tense turns (tense not announced),
+`/revision` Glitch review built from real mistake rows, `/simulation` first
+Grand Simulation gated at présent mastery ≥ 50 %, retention `dueForReview`
+flags after 3 untouched days. Verified: build, glitch round-trip, retention
+flag, all pages HTTP 200. Test data reset. Remaining: teacher review.
+
 Outputs when complete:
 
 - Next.js app running locally (frontend + Route Handlers)

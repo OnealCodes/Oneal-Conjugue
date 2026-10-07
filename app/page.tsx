@@ -40,6 +40,24 @@ export default function Home() {
             maîtrise, étoiles, banque de fautes
           </span>
         </a>
+        <a
+          href="/revision"
+          className="rounded-2xl border-2 border-orange-500 bg-white p-5 font-bold text-orange-700 hover:bg-orange-50"
+        >
+          ⚡ Révision Glitch →
+          <span className="block text-sm font-normal text-gray-500">
+            tes fautes reviennent te hanter
+          </span>
+        </a>
+        <a
+          href="/simulation"
+          className="rounded-2xl border-2 border-dashed border-teal-600 bg-teal-50 p-5 font-bold text-teal-800 hover:bg-teal-100"
+        >
+          🎭 Grande Simulation →
+          <span className="block text-sm font-normal text-gray-500">
+            Reconstituer la soirée (débloque à 50 %)
+          </span>
+        </a>
       </nav>
 
       <footer className="pb-6 text-center text-xs text-gray-500">
