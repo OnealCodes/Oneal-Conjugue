@@ -26,9 +26,9 @@ export default function Home() {
           href="/jouer"
           className="rounded-2xl bg-[#1b2a4a] p-5 font-bold text-white hover:brightness-125"
         >
-          ⚔ Jouer les cas A1 →
+          ⚔ Jouer les cas A1–B2 →
           <span className="block text-sm font-normal text-white/70">
-            8 cas · étoiles et maîtrise enregistrées
+            14 cas + simulation · étoiles et maîtrise enregistrées
           </span>
         </a>
         <a

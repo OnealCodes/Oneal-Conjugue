@@ -1,4 +1,4 @@
-import { pgTable, text, integer, timestamp, jsonb, uuid, primaryKey } from "drizzle-orm/pg-core";
+import { pgTable, text, integer, timestamp, jsonb, uuid, primaryKey, boolean } from "drizzle-orm/pg-core";
 
 // Local learner profiles (single-device for now; Better Auth later per plan).
 export const profiles = pgTable("profiles", {
@@ -33,6 +33,18 @@ export const progress = pgTable(
   (t) => [primaryKey({ columns: [t.profileId, t.formId] })]
 );
 
+// Every attempt (Phase 3): powers recognition-vs-production dimensions.
+export const attempts = pgTable("attempts", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  profileId: uuid("profile_id")
+    .notNull()
+    .references(() => profiles.id),
+  formId: text("form_id").notNull(),
+  correct: boolean("correct").notNull(),
+  kind: text("kind").notNull().default("chip"), // chip (recognition) | typed (production)
+  createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
+});
+
 // Tracked mistakes for Time Glitch review (PRD §17 categories).
 export const mistakes = pgTable("mistakes", {
   id: uuid("id").defaultRandom().primaryKey(),
@@ -63,4 +75,5 @@ export const verbs = pgTable("verbs", {
   participle: text("participle"),
   imparfaitStem: text("imparfait_stem"),
   futurStem: text("futur_stem"), // null = regular (infinitive-based)
+  subjonctif: jsonb("subjonctif"), // { je, tu, il, nous, vous, ils } or partial
 });

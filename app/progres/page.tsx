@@ -19,12 +19,27 @@ interface MistakeRow {
 const FORM_NAMES: Record<string, string> = {
   present: "Présent",
   futur_proche: "Futur proche",
-  passe_compose: "Passé composé (aperçu)",
+  passe_compose: "Passé composé",
+  imparfait: "Imparfait",
+  futur: "Futur simple",
+  subjonctif: "Subjonctif présent",
+  conditionnel_present: "Conditionnel présent",
+  plus_que_parfait: "Plus-que-parfait",
+  conditionnel_passe: "Conditionnel passé",
+  futur_anterieur: "Futur antérieur",
 };
+
+interface DimRow {
+  formId: string;
+  kind: string;
+  total: number;
+  hits: number;
+}
 
 export default function Progres() {
   const [progress, setProgress] = useState<ProgressRow[]>([]);
   const [mistakes, setMistakes] = useState<MistakeRow[]>([]);
+  const [dims, setDims] = useState<DimRow[]>([]);
 
   useEffect(() => {
     fetch("/api/progress")
@@ -32,8 +47,29 @@ export default function Progres() {
       .then((d) => {
         setProgress(d.progress ?? []);
         setMistakes(d.mistakes ?? []);
+        setDims(d.dimensions ?? []);
       });
   }, []);
+
+  function dimLine(formId: string) {
+    const rows = dims.filter((x) => x.formId === formId);
+    if (rows.length === 0) return null;
+    const part = (kind: string, icon: string, label: string) => {
+      const r = rows.find((x) => x.kind === kind);
+      if (!r) return null;
+      const pct = r.total > 0 ? Math.round((100 * r.hits) / r.total) : 0;
+      return (
+        <span key={kind} className="mr-3">
+          {icon} {label} : {r.hits}/{r.total} ({pct} %)
+        </span>
+      );
+    };
+    return (
+      <p className="mt-1 text-xs text-gray-600">
+        {part("chip", "👁", "reco")} {part("typed", "✍️", "prod")}
+      </p>
+    );
+  }
 
   return (
     <main className="mx-auto max-w-2xl space-y-4 p-4 sm:p-6">
@@ -72,6 +108,7 @@ export default function Progres() {
                 ⏳ À réviser — 3+ jours sans pratique (retention check)
               </p>
             )}
+            {dimLine(p.formId)}
           </div>
         ))}
       </section>

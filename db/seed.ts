@@ -5,7 +5,7 @@ import { verbs, curriculumForms, cases, profiles } from "./schema";
 
 // Verb bank: infinitive + group + présent forms + Phase 2 stems.
 // Présent forms checked against standard conjugations.
-const VERBS: {
+interface SeedVerb {
   infinitive: string;
   group: string;
   level: string;
@@ -14,7 +14,8 @@ const VERBS: {
   participle: string;
   imparfaitStem: string;
   futurStem: string | null;
-}[] = [
+}
+const VERBS: SeedVerb[] = [
   { infinitive: "être", group: "irregular", level: "A1", present: { je: "suis", tu: "es", il: "est", nous: "sommes", vous: "êtes", ils: "sont" }, auxiliary: "avoir", participle: "été", imparfaitStem: "ét", futurStem: "ser" },
   { infinitive: "avoir", group: "irregular", level: "A1", present: { je: "ai", tu: "as", il: "a", nous: "avons", vous: "avez", ils: "ont" }, auxiliary: "avoir", participle: "eu", imparfaitStem: "av", futurStem: "aur" },
   { infinitive: "aller", group: "irregular", level: "A1", present: { je: "vais", tu: "vas", il: "va", nous: "allons", vous: "allez", ils: "vont" }, auxiliary: "être", participle: "allé", imparfaitStem: "all", futurStem: "ir" },
@@ -49,12 +50,66 @@ const VERBS: {
   { infinitive: "rentrer", group: "er", level: "A2", present: { je: "rentre", tu: "rentres", il: "rentre", nous: "rentrons", vous: "rentrez", ils: "rentrent" }, auxiliary: "être", participle: "rentré", imparfaitStem: "rentr", futurStem: null },
 ];
 
+// Subjonctif présent forms (too irregular for rules — stored explicitly).
+const SUBJ: Record<string, Record<string, string>> = {
+  "être": { je: "sois", tu: "sois", il: "soit", nous: "soyons", vous: "soyez", ils: "soient" },
+  "avoir": { je: "aie", tu: "aies", il: "ait", nous: "ayons", vous: "ayez", ils: "aient" },
+  "aller": { je: "aille", tu: "ailles", il: "aille", nous: "allions", vous: "alliez", ils: "aillent" },
+  "faire": { je: "fasse", tu: "fasses", il: "fasse", nous: "fassions", vous: "fassiez", ils: "fassent" },
+  "parler": { je: "parle", tu: "parles", il: "parle", nous: "parlions", vous: "parliez", ils: "parlent" },
+  "travailler": { je: "travaille", tu: "travailles", il: "travaille", nous: "travaillions", vous: "travailliez", ils: "travaillent" },
+  "chercher": { je: "cherche", tu: "cherches", il: "cherche", nous: "cherchions", vous: "cherchiez", ils: "cherchent" },
+  "jouer": { je: "joue", tu: "joues", il: "joue", nous: "jouions", vous: "jouiez", ils: "jouent" },
+  "finir": { je: "finisse", tu: "finisses", il: "finisse", nous: "finissions", vous: "finissiez", ils: "finissent" },
+  "partir": { je: "parte", tu: "partes", il: "parte", nous: "partions", vous: "partiez", ils: "partent" },
+  "vendre": { je: "vende", tu: "vendes", il: "vende", nous: "vendions", vous: "vendiez", ils: "vendent" },
+  "prendre": { je: "prenne", tu: "prennes", il: "prenne", nous: "prenions", vous: "preniez", ils: "prennent" },
+  "venir": { je: "vienne", tu: "viennes", il: "vienne", nous: "venions", vous: "veniez", ils: "viennent" },
+  "pouvoir": { je: "puisse", tu: "puisses", il: "puisse", nous: "puissions", vous: "puissiez", ils: "puissent" },
+  "vouloir": { je: "veuille", tu: "veuilles", il: "veuille", nous: "voulions", vous: "vouliez", ils: "veuillent" },
+  "devoir": { je: "doive", tu: "doives", il: "doive", nous: "devions", vous: "deviez", ils: "doivent" },
+  "savoir": { je: "sache", tu: "saches", il: "sache", nous: "sachions", vous: "sachiez", ils: "sachent" },
+  "dire": { je: "dise", tu: "dises", il: "dise", nous: "disions", vous: "disiez", ils: "disent" },
+  "voir": { je: "voie", tu: "voies", il: "voie", nous: "voyions", vous: "voyiez", ils: "voient" },
+  "mettre": { je: "mette", tu: "mettes", il: "mette", nous: "mettions", vous: "mettiez", ils: "mettent" },
+  "manger": { je: "mange", tu: "manges", il: "mange", nous: "mangions", vous: "mangiez", ils: "mangent" },
+  "dormir": { je: "dorme", tu: "dormes", il: "dorme", nous: "dormions", vous: "dormiez", ils: "dorment" },
+  "lire": { je: "lise", tu: "lises", il: "lise", nous: "lisions", vous: "lisiez", ils: "lisent" },
+  "écrire": { je: "écrive", tu: "écrives", il: "écrive", nous: "écrivions", vous: "écriviez", ils: "écrivent" },
+  "boire": { je: "boive", tu: "boives", il: "boive", nous: "buvions", vous: "buviez", ils: "boivent" },
+  "recevoir": { je: "reçoive", tu: "reçoives", il: "reçoive", nous: "recevions", vous: "receviez", ils: "reçoivent" },
+  "acheter": { je: "achète", tu: "achètes", il: "achète", nous: "achetions", vous: "achetiez", ils: "achètent" },
+  "appeler": { je: "appelle", tu: "appelles", il: "appelle", nous: "appelions", vous: "appeliez", ils: "appellent" },
+  "préférer": { je: "préfère", tu: "préfères", il: "préfère", nous: "préférions", vous: "préfériez", ils: "préfèrent" },
+  "pleuvoir": { il: "pleuve" },
+  "entrer": { je: "entre", tu: "entres", il: "entre", nous: "entrions", vous: "entriez", ils: "entrent" },
+  "rentrer": { je: "rentre", tu: "rentres", il: "rentre", nous: "rentrions", vous: "rentriez", ils: "rentrent" },
+  "falloir": { il: "faille" },
+  "se lever": { je: "me lève", tu: "te lèves", il: "se lève", nous: "nous levons", vous: "vous levez", ils: "se lèvent" },
+  "rire": { je: "rie", tu: "ries", il: "rie", nous: "riions", vous: "riiez", ils: "rient" },
+  "croire": { je: "croie", tu: "croies", il: "croie", nous: "croyions", vous: "croyiez", ils: "croient" },
+};
+
+const NEW_VERBS: SeedVerb[] = [
+  { infinitive: "falloir", group: "irregular", level: "B1", present: { il: "faut" }, auxiliary: "avoir", participle: "fallu", imparfaitStem: "fall", futurStem: "faudr" },
+  { infinitive: "se lever", group: "pronominal", level: "B1", present: { je: "me lève", tu: "te lèves", il: "se lève", nous: "nous levons", vous: "vous levez", ils: "se lèvent" }, auxiliary: "être", participle: "levé", imparfaitStem: "lev", futurStem: null },
+  { infinitive: "rire", group: "irregular", level: "B1", present: { je: "ris", tu: "ris", il: "rit", nous: "rions", vous: "riez", ils: "rient" }, auxiliary: "avoir", participle: "ri", imparfaitStem: "ri", futurStem: "rir" },
+  { infinitive: "croire", group: "irregular", level: "B1", present: { je: "crois", tu: "crois", il: "croit", nous: "croyons", vous: "croyez", ils: "croient" }, auxiliary: "avoir", participle: "cru", imparfaitStem: "croy", futurStem: "croir" },
+];
+
+VERBS.push(...NEW_VERBS);
+
 const FORMS = [
   { formId: "present", introducedLevel: "A1", productionLevel: "A1", mode: "production", frequencyTier: "everyday" },
   { formId: "futur_proche", introducedLevel: "A1", productionLevel: "A1", mode: "production", frequencyTier: "everyday" },
   { formId: "passe_compose", introducedLevel: "A1", productionLevel: "A2", mode: "production", frequencyTier: "everyday" },
   { formId: "imparfait", introducedLevel: "A2", productionLevel: "A2", mode: "production", frequencyTier: "everyday" },
   { formId: "futur", introducedLevel: "A2", productionLevel: "A2", mode: "production", frequencyTier: "everyday" },
+  { formId: "subjonctif", introducedLevel: "B1", productionLevel: "B2", mode: "production", frequencyTier: "everyday" },
+  { formId: "conditionnel_present", introducedLevel: "B1", productionLevel: "B1", mode: "production", frequencyTier: "everyday" },
+  { formId: "plus_que_parfait", introducedLevel: "B1", productionLevel: "B2", mode: "production", frequencyTier: "everyday" },
+  { formId: "conditionnel_passe", introducedLevel: "B2", productionLevel: "B2", mode: "production", frequencyTier: "everyday" },
+  { formId: "futur_anterieur", introducedLevel: "B2", productionLevel: "B2", mode: "production", frequencyTier: "written" },
 ];
 
 interface Turn {
@@ -234,11 +289,75 @@ const CASES: { id: string; chapter: string; title: string; scene: string; sceneG
         ["a été", "est", "sera", "soit"], "Décor du récit → imparfait : la rue était vide.", P("imparfait"), { mixed: true }),
     ],
   },
+  {
+    id: "b1c1", chapter: "B1", title: "Il faut que…",
+    scene: "Professeure : Pour réussir, il y a des règles.", sceneGloss: "To succeed, there are rules.",
+    turns: [
+      turn("Il faut que tu ___ (venir).", "You must come.", "venir", "tu", "viennes",
+        ["viens", "viendras", "es venu", "viendrais"], "Après « il faut que » → subjonctif : que tu viennes.", P("subjonctif")),
+      turn("Je veux que vous ___ (faire) attention.", "I want you to be careful.", "faire", "vous", "fassiez",
+        ["faites", "ferez", "avez fait", "fassent"], "Après « vouloir que » → subjonctif : que vous fassiez.", P("subjonctif")),
+    ],
+  },
+  {
+    id: "b1c2", chapter: "B1", title: "Si j'avais…",
+    scene: "Léo : Et si tout était possible ?", sceneGloss: "What if everything were possible?",
+    turns: [
+      turn("Si j'avais le temps, je ___ (partir).", "If I had time, I'd leave.", "partir", "je", "partirais",
+        ["partirai", "partais", "suis parti", "parte"], "Si + imparfait → conditionnel : je partirais.", P("conditionnel_present")),
+      turn("___-vous m'aider, s'il vous plaît ? (pouvoir)", "Could you help me, please?", "pouvoir", "vous", "pourriez",
+        ["pouvez", "pourrez", "avez pu", "puissiez"], "Politesse → conditionnel : Pourriez-vous… (pas « Pouvez » ici).", P("conditionnel_present")),
+    ],
+  },
+  {
+    id: "b1c3", chapter: "B1", title: "Avant…",
+    scene: "Témoin : Laissez-moi remettre les événements en ordre.", sceneGloss: "Let me put events in order.",
+    turns: [
+      turn("Quand je suis arrivé, ils ___ (partir) déjà.", "When I arrived, they'd already left.", "partir", "ils", "étaient partis",
+        ["sont partis", "partaient", "partiront", "partent"], "Action avant une autre action passée → plus-que-parfait.", P("plus_que_parfait")),
+      turn("Elle ___ (lire) ce livre avant.", "She had read this book before.", "lire", "il", "avait lu",
+        ["a lu", "lisait", "lira", "lise"], "Antériorité dans le passé : auxiliaire à l'imparfait + participe.", P("plus_que_parfait")),
+    ],
+  },
+  {
+    id: "b1c4", chapter: "B1", title: "Le matin",
+    scene: "Réveil : Debout, apprenti !", sceneGloss: "Up, apprentice!",
+    turns: [
+      turn("Je ___ (se lever) à 7 heures.", "I get up at 7.", "se lever", "je", "me lève",
+        ["me lèves", "se lève", "nous levons", "lever"], "Verbe pronominal : le pronom réfléchi s'accorde (je → me).", P("present")),
+      turn("Levez-___ ! (se lever, impératif)", "Get up!", "se lever", "vous", "vous",
+        ["te", "nous", "les", "se"], "Impératif + pronom : Levez-vous ! (pronom après, trait d'union).", P("present")),
+    ],
+  },
+  {
+    id: "b2c1", chapter: "B2", title: "Doutes et regrets",
+    scene: "Avocate : Chaque mot compte.", sceneGloss: "Every word counts.",
+    turns: [
+      turn("Il est possible qu'elle ___ (venir).", "She may come.", "venir", "il", "vienne",
+        ["vient", "viendra", "est venue", "viendrait"], "« Il est possible que » (doute) → subjonctif : qu'elle vienne.", P("subjonctif")),
+      turn("À ta place, je ___ (prendre) le train.", "In your shoes, I'd take the train.", "prendre", "je", "prendrais",
+        ["prendrai", "prenais", "ai pris", "prenne"], "Conseil hypothétique → conditionnel : je prendrais.", P("conditionnel_present")),
+      turn("Si j'avais su, je ___ (venir) plus tôt.", "Had I known, I'd have come earlier.", "venir", "je", "serais venu",
+        ["viendrais", "suis venu", "venais", "venir"], "Si + plus-que-parfait → conditionnel passé : je serais venu.", P("conditionnel_passe")),
+    ],
+  },
+  {
+    id: "b2c2", chapter: "B2", title: "Le rapport (mélangé)",
+    scene: "Directrice : Le rapport doit être prêt.", sceneGloss: "The report must be ready.",
+    turns: [
+      turn("Quand tu arriveras, j'___ (finir) le rapport.", "When you arrive, I'll have finished the report.", "finir", "je", "aurai fini",
+        ["ai fini", "finirai", "finisse", "finissais"], "Action future avant une autre → futur antérieur : j'aurai fini.", P("futur_anterieur")),
+      turn("Il faut qu'il ___ (être) là avant midi.", "He must be there before noon.", "être", "il", "soit",
+        ["est", "sera", "a été", "était"], "« Il faut que » → subjonctif, même au B2 : qu'il soit.", P("subjonctif"), { mixed: true }),
+      turn("Hier, elle ___ (recevoir) ma lettre.", "Yesterday she received my letter.", "recevoir", "il", "a reçu",
+        ["recevait", "recevra", "reçoive", "reçoit"], "« Hier » → passé composé : elle a reçu.", P("passe_compose"), { mixed: true }),
+    ],
+  },
 ];
 
 async function main() {
   // Fresh local seed (dev database only).
-  await db.execute(sql`TRUNCATE mistakes, progress, cases, curriculum_forms, verbs, profiles RESTART IDENTITY CASCADE`);
+  await db.execute(sql`TRUNCATE attempts, mistakes, progress, cases, curriculum_forms, verbs, profiles RESTART IDENTITY CASCADE`);
 
   const [profile] = await db.insert(profiles).values({ name: "Apprenti" }).returning();
   console.log("profile:", profile.id, profile.name);
@@ -247,6 +366,7 @@ async function main() {
     infinitive: v.infinitive, group: v.group, level: v.level, present: v.present,
     auxiliary: v.auxiliary, participle: v.participle,
     imparfaitStem: v.imparfaitStem, futurStem: v.futurStem,
+    subjonctif: SUBJ[v.infinitive] ?? null,
   })));
   console.log("verbs:", VERBS.length);
 

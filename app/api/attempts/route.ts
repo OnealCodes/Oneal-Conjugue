@@ -1,18 +1,27 @@
 import { NextResponse } from "next/server";
 import { and, eq, sql } from "drizzle-orm";
 import { db } from "@/db";
-import { mistakes, progress } from "@/db/schema";
+import { attempts, mistakes, progress } from "@/db/schema";
 import { ensureProfile } from "@/lib/profile";
 
 // Simplified Phase 1 scoring (PRD weights arrive with real mastery dimensions):
 // correct → mastery +8 (cap 100); wrong → mastery −2 (floor 0) + mistake row.
+// Every attempt is also logged for recognition-vs-production dimensions.
 export async function POST(req: Request) {
   const body = await req.json().catch(() => null);
-  const { formId, correct, category, detail } = body ?? {};
+  const { formId, correct, category, detail, kind } = body ?? {};
   if (typeof formId !== "string" || typeof correct !== "boolean") {
     return NextResponse.json({ ok: false, error: "formId + correct required" }, { status: 400 });
   }
   const profile = await ensureProfile();
+  const inputKind = kind === "typed" ? "typed" : "chip";
+
+  await db.insert(attempts).values({
+    profileId: profile.id,
+    formId,
+    correct,
+    kind: inputKind,
+  });
 
   await db
     .insert(progress)

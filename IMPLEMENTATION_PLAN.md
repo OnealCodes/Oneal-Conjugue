@@ -71,6 +71,19 @@ Grand Simulation gated at présent mastery ≥ 50 %, retention `dueForReview`
 flags after 3 untouched days. Verified: build, glitch round-trip, retention
 flag, all pages HTTP 200. Test data reset. Remaining: teacher review.
 
+**Status (7 Oct 2026): Phase 3 content playable end-to-end.** Verb bank grown
+to 36 (subjonctif forms stored explicitly; conditionnel = futur stem +
+imparfait endings; PQP/futur antérieur/conditionnel passé in
+`lib/conjugate.ts` with être agreement); 10 curriculum forms; 21 cases incl.
+6 B1–B2 cases (subjonctif triggers, si+imparfait→conditionnel, PQP timelines,
+futur antérieur, mixed). New: `attempts` log with chip-vs-typed kinds,
+dashboard recognition/production dimensions, free Web Speech audio (🔊) on
+turns, pronominal verb demo (se lever). Verified: engine cross-check 46/46
+(1 imperative-pronoun turn intentionally exempt), build, dimensions
+round-trip, all pages HTTP 200. Simplifications kept: masculine default
+agreement, +8/−2 mastery, single local profile. Remaining: teacher review,
+native audio later.
+
 Outputs when complete:
 
 - Next.js app running locally (frontend + Route Handlers)

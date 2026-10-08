@@ -67,6 +67,14 @@ export default function Jouer() {
     setStars(0);
   }
 
+  function speak(text: string) {
+    if (typeof window === "undefined" || !("speechSynthesis" in window)) return;
+    window.speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang = "fr-FR";
+    window.speechSynthesis.speak(u);
+  }
+
   async function check() {
     if (!turn || !active) return;
     const clean = typed.trim().toLowerCase();
@@ -83,6 +91,7 @@ export default function Jouer() {
       body: JSON.stringify({
         formId,
         correct: ok,
+        kind: clean ? "typed" : "chip",
         category: ok ? undefined : "mauvais_sujet",
         detail: { caseId: active.id, prompt: turn.prompt, given },
       }),
@@ -120,7 +129,7 @@ export default function Jouer() {
     return (
       <main className="mx-auto max-w-4xl space-y-3 p-4 sm:p-6">
         <a href="/" className="text-sm text-blue-700">← Accueil</a>
-        <h1 className="text-2xl font-extrabold text-[#1b2a4a]">Cas · A1–A2</h1>
+        <h1 className="text-2xl font-extrabold text-[#1b2a4a]">Cas · A1–B2</h1>
         <div className="grid gap-2">
           {cases
             .filter((c) => c.chapter !== "SIM")
@@ -190,6 +199,13 @@ export default function Jouer() {
             <p className="mt-3 text-lg">
               <strong>{turn.prompt}</strong>
               <span className="block text-sm text-gray-500">{turn.gloss}</span>
+              <button
+                onClick={() => speak(turn.prompt.replace("___", turn.answer))}
+                aria-label="Écouter la phrase"
+                className="mt-1 rounded-full border-2 border-gray-200 bg-white px-3 py-0.5 text-sm hover:border-blue-700"
+              >
+                🔊 Écouter
+              </button>
             </p>
             <div className="mt-2 flex flex-wrap gap-2">
               {options.map((o) => (
