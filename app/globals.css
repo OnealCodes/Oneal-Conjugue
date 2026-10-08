@@ -13,3 +13,12 @@ body {
     radial-gradient(circle at 92% 8%, #ffd9de 0 110px, transparent 111px);
   color: var(--ink);
 }
+
+@keyframes sway {
+  0%, 100% { transform: rotate(-10deg); }
+  50% { transform: rotate(10deg); }
+}
+
+.animate-sway {
+  animation: sway 2s ease-in-out infinite;
+}

@@ -128,9 +128,10 @@ interface Turn {
   mixed?: boolean;
   preview?: boolean;
   recognition?: boolean;
+  gender?: "f" | "m";
 }
 
-function turn(prompt: string, gloss: string, verb: string, subject: string, answer: string, distractors: string[], explanation: string, formId: string, extra?: { mixed?: boolean; preview?: boolean; recognition?: boolean }): Turn {
+function turn(prompt: string, gloss: string, verb: string, subject: string, answer: string, distractors: string[], explanation: string, formId: string, extra?: { mixed?: boolean; preview?: boolean; recognition?: boolean; gender?: "f" | "m" }): Turn {
   return { prompt, gloss, verb, subject, answer, distractors, explanation, formId, ...extra };
 }
 
@@ -233,7 +234,7 @@ const CASES: { id: string; chapter: string; title: string; scene: string; sceneG
     scene: "Contrôleur : Vos billets, s'il vous plaît.", sceneGloss: "Tickets, please.",
     turns: [
       turn("Elle ___ (aller) à Paris.", "She went to Paris.", "aller", "il", "est allée",
-        ["a allé", "est allé", "sont allées", "sommes allés"], "Aller prend l'auxiliaire être ; avec « elle », on accorde : est allée.", P("passe_compose")),
+        ["a allé", "est allé", "sont allées", "sommes allés"], "Aller prend l'auxiliaire être ; avec « elle », on accorde : est allée.", P("passe_compose"), { gender: "f" }),
       turn("Nous ___ (venir) hier.", "We came yesterday.", "venir", "nous", "sommes venus",
         ["avons venu", "sommes venu", "est venus", "sont venus"], "Venir prend être ; avec « nous » (masc.), on accorde : sommes venus.", P("passe_compose")),
     ],
@@ -287,7 +288,7 @@ const CASES: { id: string; chapter: string; title: string; scene: string; sceneG
     scene: "Inspecteur : Reconstituons la soirée, minute par minute.", sceneGloss: "Let's reconstruct the evening, minute by minute.",
     turns: [
       turn("Hier soir, je ___ (rentrer) à 22 heures.", "Last night I got home at 10pm.", "rentrer", "je", "suis rentrée",
-        ["suis rentré", "ai rentré", "es rentrée", "est rentrée"], "Témoin féminin + rentrer (être) : je suis rentrée.", P("passe_compose"), { mixed: true }),
+        ["suis rentré", "ai rentré", "es rentrée", "est rentrée"], "Témoin féminin + rentrer (être) : je suis rentrée.", P("passe_compose"), { mixed: true, gender: "f" }),
       turn("Il ___ (pleuvoir) très fort.", "It was raining hard.", "pleuvoir", "il", "pleuvait",
         ["a plu", "pleut", "pleuvra", "pleuve"], "La météo en fond → imparfait : il pleuvait.", P("imparfait"), { mixed: true }),
       turn("La rue ___ (être) vide.", "The street was empty.", "être", "il", "était",
@@ -365,7 +366,7 @@ const CASES: { id: string; chapter: string; title: string; scene: string; sceneG
       turn("Bien qu'il ___ (finir) son travail…", "Although he finished his work…", "finir", "il", "ait fini",
         ["a fini", "finisse", "finira", "finissait"], "« Bien que » + accompli → subjonctif passé : qu'il ait fini.", P("subjonctif_passe")),
       turn("Il est possible qu'elle ___ (partir) déjà.", "She may already have left.", "partir", "il", "soit partie",
-        ["est partie", "parte", "partira", "partait"], "Doute + antériorité, sujet féminin → qu'elle soit partie.", P("subjonctif_passe")),
+        ["est partie", "parte", "partira", "partait"], "Doute + antériorité, sujet féminin → qu'elle soit partie.", P("subjonctif_passe"), { gender: "f" }),
     ],
   },
   {
@@ -395,7 +396,7 @@ const CASES: { id: string; chapter: string; title: string; scene: string; sceneG
       turn("« Dès qu'il eut terminé, il sortit. » — Quel temps pour « eut terminé » ?", "Which tense?", "finir", "il", "passé antérieur",
         ["plus-que-parfait", "passé simple", "passé composé"], "Passé antérieur littéraire : action avant un passé simple.", P("passe_anterieur"), { recognition: true }),
       turn("Bien qu'elle ___ (finir) son travail, elle reste.", "Although she's finished her work, she's staying.", "finir", "il", "ait fini",
-        ["a fini", "finisse", "finira", "finissait"], "Concession accomplie → subjonctif passé : bien qu'elle ait fini.", P("subjonctif_passe"), { mixed: true }),
+        ["a fini", "finisse", "finira", "finissait"], "Concession accomplie → subjonctif passé : bien qu'elle ait fini.", P("subjonctif_passe"), { mixed: true, gender: "f" }),
       turn("Quoiqu'il ___ (pleuvoir), ils partirent.", "Although it was raining, they left.", "pleuvoir", "il", "pleuve",
         ["pleut", "pleuvra", "a plu", "pleuvait"], "« Quoique » (soutenu) → subjonctif : qu'il pleuve.", P("subjonctif"), { mixed: true }),
     ],

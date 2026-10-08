@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import ActorHint from "@/components/ActorHint";
 
 interface Turn {
   prompt: string;
@@ -9,6 +10,8 @@ interface Turn {
   distractors: string[];
   explanation: string;
   formId: string;
+  subject: string;
+  gender?: "f" | "m";
 }
 
 interface SimCase {
@@ -182,11 +185,28 @@ export default function Simulation() {
           🎭 {active?.title} · {idx + 1}/{active?.dialogue.turns.length}
         </p>
         <p className="text-sm text-gray-600">{active?.dialogue.scene} — le temps n&apos;est pas annoncé !</p>
+        <div className="mt-2 overflow-hidden rounded-xl">
+          <div
+            className="h-6"
+            style={{ background: "repeating-linear-gradient(90deg,#ef4135 0 22px,#fff 22px 44px)" }}
+          />
+          <div className="flex items-end justify-around bg-gradient-to-b from-sky-200 to-green-200 px-4 pb-2 pt-1">
+            <span title="L'interlocuteur" className="inline-block animate-sway text-5xl">
+              🕵️
+            </span>
+            <span title="Toi, l'apprenti" className="inline-block animate-bounce text-5xl">
+              🧙
+            </span>
+          </div>
+        </div>
         {turn && (
           <>
             <p className="mt-3 text-lg">
               <strong>{turn.prompt}</strong>
               <span className="block text-sm text-gray-500">{turn.gloss}</span>
+              <span className="mt-1 block">
+                <ActorHint subject={turn.subject} gender={turn.gender} />
+              </span>
             </p>
             <div className="mt-2 flex flex-wrap gap-2">
               {options.map((o) => (

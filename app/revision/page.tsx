@@ -1,14 +1,17 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import ActorHint from "@/components/ActorHint";
 
 interface GlitchTurn {
   prompt: string;
   gloss: string;
+  subject: string;
   answer: string;
   distractors: string[];
   explanation: string;
   formId: string;
+  gender?: "f" | "m";
   caseId: string;
   caseTitle: string;
 }
@@ -102,6 +105,9 @@ export default function Revision() {
           <p className="mt-3 text-lg">
             <strong>{turn.prompt}</strong>
             <span className="block text-sm text-gray-500">{turn.gloss}</span>
+            <span className="mt-1 block">
+              <ActorHint subject={turn.subject} gender={turn.gender} />
+            </span>
           </p>
           <div className="mt-2 flex flex-wrap gap-2">
             {options.map((o) => (

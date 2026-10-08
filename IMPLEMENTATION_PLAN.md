@@ -125,6 +125,12 @@ flow (56 → unlocked), all pages HTTP 200. Test data reset.
 can. C1–C2 content is engine-verified but expert review is still recommended
 before calling it final.
 
+**Game-feel pass (owner requests):** `/simulation` now stages animated actors
+(🕵️ + 🧙 under a market awning, walk-in/idle/celebrate/react), and every
+exercise shows an animated gender/number hint (`ActorHint`: swaying 👩 ♀,
+pulsing 👨 ♂, bouncing 👥 pluriel) so agreement has a visual cue. These are
+2D stand-ins; true 3D characters remain prototype-phase work.
+
 ---
 
 ## 4. Final proposed technology stack (local only)

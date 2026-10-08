@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import ActorHint from "@/components/ActorHint";
 
 interface Turn {
   prompt: string;
@@ -13,6 +14,7 @@ interface Turn {
   formId: string;
   mixed?: boolean;
   preview?: boolean;
+  gender?: "f" | "m";
 }
 
 interface CaseRow {
@@ -199,6 +201,9 @@ export default function Jouer() {
             <p className="mt-3 text-lg">
               <strong>{turn.prompt}</strong>
               <span className="block text-sm text-gray-500">{turn.gloss}</span>
+              <span className="mt-1 block">
+                <ActorHint subject={turn.subject} gender={turn.gender} />
+              </span>
               <button
                 onClick={() => speak(turn.prompt.replace("___", turn.answer))}
                 aria-label="Écouter la phrase"
