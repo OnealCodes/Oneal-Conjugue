@@ -110,6 +110,10 @@ const FORMS = [
   { formId: "plus_que_parfait", introducedLevel: "B1", productionLevel: "B2", mode: "production", frequencyTier: "everyday" },
   { formId: "conditionnel_passe", introducedLevel: "B2", productionLevel: "B2", mode: "production", frequencyTier: "everyday" },
   { formId: "futur_anterieur", introducedLevel: "B2", productionLevel: "B2", mode: "production", frequencyTier: "written" },
+  { formId: "subjonctif_passe", introducedLevel: "C1", productionLevel: "C1", mode: "production", frequencyTier: "formal" },
+  { formId: "passe_simple", introducedLevel: "B2", productionLevel: "C1", mode: "recognition_only", frequencyTier: "literary" },
+  { formId: "imparfait_subjonctif", introducedLevel: "C2", productionLevel: "C2", mode: "recognition_only", frequencyTier: "literary" },
+  { formId: "passe_anterieur", introducedLevel: "C1", productionLevel: "C1", mode: "recognition_only", frequencyTier: "literary" },
 ];
 
 interface Turn {
@@ -123,9 +127,10 @@ interface Turn {
   formId: string;
   mixed?: boolean;
   preview?: boolean;
+  recognition?: boolean;
 }
 
-function turn(prompt: string, gloss: string, verb: string, subject: string, answer: string, distractors: string[], explanation: string, formId: string, extra?: { mixed?: boolean; preview?: boolean }): Turn {
+function turn(prompt: string, gloss: string, verb: string, subject: string, answer: string, distractors: string[], explanation: string, formId: string, extra?: { mixed?: boolean; preview?: boolean; recognition?: boolean }): Turn {
   return { prompt, gloss, verb, subject, answer, distractors, explanation, formId, ...extra };
 }
 
@@ -351,6 +356,72 @@ const CASES: { id: string; chapter: string; title: string; scene: string; sceneG
         ["est", "sera", "a été", "était"], "« Il faut que » → subjonctif, même au B2 : qu'il soit.", P("subjonctif"), { mixed: true }),
       turn("Hier, elle ___ (recevoir) ma lettre.", "Yesterday she received my letter.", "recevoir", "il", "a reçu",
         ["recevait", "recevra", "reçoive", "reçoit"], "« Hier » → passé composé : elle a reçu.", P("passe_compose"), { mixed: true }),
+    ],
+  },
+  {
+    id: "c1c1", chapter: "C1", title: "Le procès",
+    scene: "Juge : La cour écoute les témoins.", sceneGloss: "The court hears the witnesses.",
+    turns: [
+      turn("Bien qu'il ___ (finir) son travail…", "Although he finished his work…", "finir", "il", "ait fini",
+        ["a fini", "finisse", "finira", "finissait"], "« Bien que » + accompli → subjonctif passé : qu'il ait fini.", P("subjonctif_passe")),
+      turn("Il est possible qu'elle ___ (partir) déjà.", "She may already have left.", "partir", "il", "soit partie",
+        ["est partie", "parte", "partira", "partait"], "Doute + antériorité, sujet féminin → qu'elle soit partie.", P("subjonctif_passe")),
+    ],
+  },
+  {
+    id: "c1c2", chapter: "C1", title: "Courrier formel",
+    scene: "Cabinet : Veuillez lire attentivement.", sceneGloss: "Please read carefully.",
+    turns: [
+      turn("Dès que vous ___ (recevoir) ce courrier, appelez-moi.", "As soon as you receive this letter, call me.", "recevoir", "vous", "aurez reçu",
+        ["avez reçu", "recevrez", "receviez", "ayez reçu"], "« Dès que » + futur, registre soutenu → futur antérieur : vous aurez reçu.", P("futur_anterieur")),
+      turn("Nous vous ___ (savoir) gré de votre réponse.", "We thank you for your reply.", "savoir", "nous", "saurons",
+        ["savons", "saurions", "avons su", "sachions"], "Formule formelle « savoir gré » : nous vous saurons gré.", P("futur")),
+    ],
+  },
+  {
+    id: "c1c3", chapter: "C1", title: "Le roman (lecture)",
+    scene: "Bibliothécaire : Chut… on lit.", sceneGloss: "Shh… we read.",
+    turns: [
+      turn("« Il ouvrit la porte et s'avança. » — Quel temps ?", "Which tense?", "ouvrir", "il", "passé simple",
+        ["imparfait", "passé composé", "futur"], "Passé simple littéraire : il ouvrit (temps du récit écrit).", P("passe_simple"), { recognition: true }),
+      turn("« Il fallait qu'il partît. » — Quel temps ?", "Which tense?", "partir", "il", "imparfait du subjonctif",
+        ["subjonctif présent", "plus-que-parfait", "conditionnel"], "Imparfait du subjonctif littéraire : qu'il partît.", P("imparfait_subjonctif"), { recognition: true }),
+    ],
+  },
+  {
+    id: "c2c1", chapter: "C2", title: "La bibliothèque (mélangé)",
+    scene: "Conservateur : Ici, chaque livre a son temps.", sceneGloss: "Here, every book has its tense.",
+    turns: [
+      turn("« Dès qu'il eut terminé, il sortit. » — Quel temps pour « eut terminé » ?", "Which tense?", "finir", "il", "passé antérieur",
+        ["plus-que-parfait", "passé simple", "passé composé"], "Passé antérieur littéraire : action avant un passé simple.", P("passe_anterieur"), { recognition: true }),
+      turn("Bien qu'elle ___ (finir) son travail, elle reste.", "Although she's finished her work, she's staying.", "finir", "il", "ait fini",
+        ["a fini", "finisse", "finira", "finissait"], "Concession accomplie → subjonctif passé : bien qu'elle ait fini.", P("subjonctif_passe"), { mixed: true }),
+      turn("Quoiqu'il ___ (pleuvoir), ils partirent.", "Although it was raining, they left.", "pleuvoir", "il", "pleuve",
+        ["pleut", "pleuvra", "a plu", "pleuvait"], "« Quoique » (soutenu) → subjonctif : qu'il pleuve.", P("subjonctif"), { mixed: true }),
+    ],
+  },
+  {
+    id: "c2c2", chapter: "C2", title: "Grand débat",
+    scene: "Modératrice : À vous de juger.", sceneGloss: "Up to you to judge.",
+    turns: [
+      turn("Je doute qu'il ___ (dire) la vérité.", "I doubt he's telling the truth.", "dire", "il", "dise",
+        ["dit", "dira", "a dit", "disait"], "Doute → subjonctif : qu'il dise.", P("subjonctif")),
+      turn("Il est évident qu'elle ___ (savoir).", "She obviously knows.", "savoir", "il", "sait",
+        ["sache", "saura", "a su", "savait"], "« Il est évident que » affirmatif → indicatif : elle sait.", P("present")),
+      turn("Partez sans que je ___ (venir).", "Leave without me coming.", "venir", "je", "vienne",
+        ["viens", "viendrai", "suis venu", "venais"], "« Sans que » → toujours le subjonctif : sans que je vienne.", P("subjonctif")),
+    ],
+  },
+  {
+    id: "sim2", chapter: "SIM", title: "Le Tribunal (simulation)",
+    scene: "Huissier : La cour entre en séance.", sceneGloss: "The court is in session.",
+    turns: [
+      turn("Bien qu'il ___ (dire) la vérité…", "Although he told the truth…", "dire", "il", "ait dit",
+        ["a dit", "dise", "dira", "disait"], "Concession accomplie → subjonctif passé : bien qu'il ait dit.", P("subjonctif_passe"), { mixed: true }),
+      turn("Le tribunal ordonne qu'elle ___ (venir) demain.", "The court orders her to come tomorrow.", "venir", "il", "vienne",
+        ["vient", "viendra", "est venue", "viendrait"], "Ordre → subjonctif : qu'elle vienne.", P("subjonctif"), { mixed: true }),
+      turn("Il a déclaré qu'il ___ (être) innocent.", "He declared he was innocent.", "être", "il", "était",
+        ["est", "sera", "a été", "soit"], "Discours rapporté au passé → concordance : qu'il était innocent.", P("imparfait"), { mixed: true }),
     ],
   },
 ];

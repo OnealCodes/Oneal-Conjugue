@@ -52,6 +52,16 @@ export function subjonctif(verb: VerbRowB1, subject: string): string {
   return verb.subjonctif?.[subject] ?? "";
 }
 
+// Phase 4: subjonctif passé = auxiliaire au subjonctif + participe.
+export function subjonctifPasse(verb: VerbRowB1, subject: string): string {
+  const auxSubj: Record<string, Record<string, string>> = {
+    être: { je: "sois", tu: "sois", il: "soit", nous: "soyons", vous: "soyez", ils: "soient" },
+    avoir: { je: "aie", tu: "aies", il: "ait", nous: "ayons", vous: "ayez", ils: "aient" },
+  };
+  const auxForms = auxSubj[verb.auxiliary] ?? auxSubj.avoir;
+  return `${auxForms[subject] ?? ""} ${verb.participle ?? ""}`.trim();
+}
+
 // Conditionnel présent = futur stem + imparfait endings.
 export function conditionnel(verb: VerbRow, subject: string): string {
   const stem = verb.futurStem ?? verb.infinitive;

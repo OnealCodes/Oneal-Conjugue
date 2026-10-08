@@ -27,6 +27,10 @@ const FORM_NAMES: Record<string, string> = {
   plus_que_parfait: "Plus-que-parfait",
   conditionnel_passe: "Conditionnel passé",
   futur_anterieur: "Futur antérieur",
+  subjonctif_passe: "Subjonctif passé",
+  passe_simple: "Passé simple (lecture)",
+  imparfait_subjonctif: "Imparfait du subjonctif (lecture)",
+  passe_anterieur: "Passé antérieur (lecture)",
 };
 
 interface DimRow {

@@ -111,10 +111,19 @@ Outputs when complete:
 
 ### Phase 4 — C1–C2
 
-Outputs when complete:
+**Status (7 Oct 2026): content playable end-to-end.** 14 curriculum forms
+(+ subjonctif passé production; passé simple / imparfait du subjonctif /
+passé antérieur recognition-only); 27 cases incl. 5 C-level cases (formal
+register, literary recognition, nuanced indicatif/subjonctif) + sim2
+« Le Tribunal » gated at subjonctif mastery ≥ 50 %. `/simulation` now lists
+all sims with per-sim unlock rules. Voice input and TCF modes explicitly
+deferred (PRD: only if validated). Verified: engine cross-check 58/58
+(4 intentionally exempt: 3 recognition + 1 imperative), build, sim2 unlock
+flow (56 → unlocked), all pages HTTP 200. Test data reset.
 
-- Formal/literary content, advanced simulations
-- Voice input and TCF modes only if validated
+**Review note:** no external teacher available; owner (B1) reviews what they
+can. C1–C2 content is engine-verified but expert review is still recommended
+before calling it final.
 
 ---
 
